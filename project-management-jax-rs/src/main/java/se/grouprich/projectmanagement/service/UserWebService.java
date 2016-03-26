@@ -99,7 +99,7 @@ public final class UserWebService
 	}
 
 	@GET
-	@Path("/query")
+	@Path("query")
 	public Response getUserByAnyName(@QueryParam("first-name") String firstName, @QueryParam("last-name") String lastName,
 			@QueryParam("username") String username)
 	{
