@@ -19,14 +19,14 @@ public abstract class AbstractEntityData
 
 	protected AbstractEntityData()
 	{
-		controlNumber = RandomStringUtils.randomAlphanumeric(8);
+		controlNumber = RandomStringUtils.randomAlphanumeric(6);
 	}
 
 	public Long getId()
 	{
 		return id;
 	}
-	
+
 	public String getControlNumber()
 	{
 		return controlNumber;

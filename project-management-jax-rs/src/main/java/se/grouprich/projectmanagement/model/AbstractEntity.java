@@ -17,9 +17,19 @@ public abstract class AbstractEntity
 	{
 		return id;
 	}
-	
+
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
+
 	public String getControlNumber()
 	{
 		return controlNumber;
+	}
+
+	public void setControlNumber(String controlNumber)
+	{
+		this.controlNumber = controlNumber;
 	}
 }

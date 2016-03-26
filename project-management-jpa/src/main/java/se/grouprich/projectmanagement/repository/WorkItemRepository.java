@@ -9,14 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.model.UserData;
 import se.grouprich.projectmanagement.model.WorkItemData;
-import se.grouprich.projectmanagement.status.WorkItemStatusData;
+import se.grouprich.projectmanagement.status.WorkItemStatus;
 
 public interface WorkItemRepository extends PagingAndSortingRepository<WorkItemData, Long>
 {
 	@Transactional
 	List<WorkItemData> removeById(Long id);
 
-	List<WorkItemData> findByStatus(WorkItemStatusData status);
+	List<WorkItemData> findByStatus(WorkItemStatus status);
 
 	List<WorkItemData> findByDescriptionContaining(String keyword);
 

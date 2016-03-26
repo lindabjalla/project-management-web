@@ -1,6 +1,6 @@
 package se.grouprich.projectmanagement.status;
 
-public enum WorkItemStatusData
+public enum WorkItemStatus
 {
 	UNSTARTED,
 	STARTED,

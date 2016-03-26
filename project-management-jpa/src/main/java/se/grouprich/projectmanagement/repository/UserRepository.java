@@ -9,7 +9,7 @@ import se.grouprich.projectmanagement.model.UserData;
 
 public interface UserRepository extends PagingAndSortingRepository<UserData, Long>
 {
-	UserData findByControlNumber(Long controlNumber);
+	UserData findByControlNumber(String controlNumber);
 
 	UserData findByFirstNameAndLastNameAndUsername(String firstName, String lastName, String username);
 

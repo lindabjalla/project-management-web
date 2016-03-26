@@ -7,7 +7,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
-import se.grouprich.projectmanagement.status.WorkItemStatusData;
+import se.grouprich.projectmanagement.status.WorkItemStatus;
 
 @Entity
 public class WorkItemData extends AbstractEntityData
@@ -23,7 +23,7 @@ public class WorkItemData extends AbstractEntityData
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	private WorkItemStatusData status;
+	private WorkItemStatus status;
 
 	protected WorkItemData(){}
 
@@ -31,7 +31,7 @@ public class WorkItemData extends AbstractEntityData
 	{
 		super();
 		this.title = title;
-		status = WorkItemStatusData.UNSTARTED;
+		status = WorkItemStatus.UNSTARTED;
 	}
 
 	public UserData getUser()
@@ -39,7 +39,7 @@ public class WorkItemData extends AbstractEntityData
 		return user;
 	}
 
-	public WorkItemStatusData getStatus()
+	public WorkItemStatus getStatus()
 	{
 		return status;
 	}
@@ -49,7 +49,7 @@ public class WorkItemData extends AbstractEntityData
 		this.title = title;
 	}
 
-	public WorkItemData setStatus(final WorkItemStatusData status)
+	public WorkItemData setStatus(final WorkItemStatus status)
 	{
 		this.status = status;
 		return this;

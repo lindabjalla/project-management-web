@@ -7,7 +7,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
-import se.grouprich.projectmanagement.status.UserStatusData;
+import se.grouprich.projectmanagement.status.UserStatus;
 
 @Entity
 public class UserData extends AbstractEntityData
@@ -26,7 +26,7 @@ public class UserData extends AbstractEntityData
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	private UserStatusData status;
+	private UserStatus status;
 
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private TeamData team;
@@ -40,7 +40,7 @@ public class UserData extends AbstractEntityData
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		status = UserStatusData.ACTIVE;
+		status = UserStatus.ACTIVE;
 	}
 
 	public String getUsername()
@@ -63,7 +63,7 @@ public class UserData extends AbstractEntityData
 		return lastName;
 	}
 
-	public UserStatusData getStatus()
+	public UserStatus getStatus()
 	{
 		return status;
 	}
@@ -85,7 +85,7 @@ public class UserData extends AbstractEntityData
 		return this;
 	}
 
-	public UserData setStatus(final UserStatusData status)
+	public UserData setStatus(final UserStatus status)
 	{
 		this.status = status;
 		return this;

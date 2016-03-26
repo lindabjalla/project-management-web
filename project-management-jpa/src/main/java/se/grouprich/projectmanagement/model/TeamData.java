@@ -10,7 +10,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 
-import se.grouprich.projectmanagement.status.TeamStatusData;
+import se.grouprich.projectmanagement.status.TeamStatus;
 
 @Entity
 public class TeamData extends AbstractEntityData
@@ -23,17 +23,15 @@ public class TeamData extends AbstractEntityData
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	private TeamStatusData status;
+	private TeamStatus status;
 
-	protected TeamData()
-	{
-	}
+	protected TeamData() {}
 
 	public TeamData(final String name)
 	{
 		super();
 		this.name = name;
-		status = TeamStatusData.ACTIVE;
+		status = TeamStatus.ACTIVE;
 		users = new HashSet<>();
 	}
 
@@ -47,7 +45,7 @@ public class TeamData extends AbstractEntityData
 		return users;
 	}
 
-	public TeamStatusData getStatus()
+	public TeamStatus getStatus()
 	{
 		return status;
 	}
@@ -57,7 +55,7 @@ public class TeamData extends AbstractEntityData
 		this.name = name;
 	}
 
-	public void setStatus(final TeamStatusData status)
+	public void setStatus(final TeamStatus status)
 	{
 		this.status = status;
 	}

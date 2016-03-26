@@ -1,8 +1,5 @@
 package se.grouprich.projectmanagement.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +13,8 @@ import se.grouprich.projectmanagement.model.WorkItemData;
 import se.grouprich.projectmanagement.repository.IssueRepository;
 import se.grouprich.projectmanagement.repository.UserRepository;
 import se.grouprich.projectmanagement.repository.WorkItemRepository;
-import se.grouprich.projectmanagement.status.UserStatusData;
-import se.grouprich.projectmanagement.status.WorkItemStatusData;
+import se.grouprich.projectmanagement.status.UserStatus;
+import se.grouprich.projectmanagement.status.WorkItemStatus;
 
 @Service
 public class WorkItemService extends AbstractService<WorkItemData, WorkItemRepository>
@@ -38,7 +35,7 @@ public class WorkItemService extends AbstractService<WorkItemData, WorkItemRepos
 		return super.createOrUpdate(workItem);
 	}
 
-	public WorkItemData changeWorkItemStatus(final WorkItemData workItem, final WorkItemStatusData status)
+	public WorkItemData changeWorkItemStatus(final WorkItemData workItem, final WorkItemStatus status)
 	{
 		workItem.setStatus(status);
 		return createOrUpdate(workItem);
@@ -55,7 +52,7 @@ public class WorkItemService extends AbstractService<WorkItemData, WorkItemRepos
 	public WorkItemData assignWorkItemToUser(final UserData user, final WorkItemData workItem) throws WorkItemException
 	{
 		final UserData savedUser = userRepository.save(user);
-		if (!UserStatusData.ACTIVE.equals(savedUser.getStatus()))
+		if (!UserStatus.ACTIVE.equals(savedUser.getStatus()))
 		{
 			throw new WorkItemException("A WorkItem can only be assigned to a User with UserStatus.ACTIVE");
 		}
@@ -70,7 +67,7 @@ public class WorkItemService extends AbstractService<WorkItemData, WorkItemRepos
 		return createOrUpdate(assignedWorkItem);
 	}
 
-	public List<WorkItemData> fetchWorkItemsByStatus(final WorkItemStatusData status)
+	public List<WorkItemData> fetchWorkItemsByStatus(final WorkItemStatus status)
 	{
 		return superRepository.findByStatus(status);
 	}

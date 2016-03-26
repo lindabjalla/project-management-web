@@ -8,18 +8,18 @@ public final class Team extends AbstractEntity
 {
 	private String name;
 	private Collection<User> users;
-	private TeamStatus status;
-	private String teamNumber;
+	private String status;
+	private String controlNumber;
 
 	public Team(){}
 
-	public Team(Long id, String name, TeamStatus status, Collection<User> users, String teamNumber, String controlNumber)
+	public Team(Long id, String name, String status, Collection<User> users, String controlNumber)
 	{
 		super(id, controlNumber);
 		this.name = name;
 		this.status = status;
 		this.users = users;
-		this.teamNumber = teamNumber;
+		this.controlNumber = controlNumber;
 	}
 
 	public String getName()
@@ -32,14 +32,9 @@ public final class Team extends AbstractEntity
 		return users;
 	}
 
-	public TeamStatus getStatus()
+	public String getStatus()
 	{
 		return status;
-	}
-	
-	public String getTeamNumber()
-	{
-		return teamNumber;
 	}
 
 	public void setName(final String name)
@@ -47,7 +42,7 @@ public final class Team extends AbstractEntity
 		this.name = name;
 	}
 
-	public void setStatus(final TeamStatus status)
+	public void setStatus(final String status)
 	{
 		this.status = status;
 	}
@@ -75,7 +70,7 @@ public final class Team extends AbstractEntity
 		if (other instanceof Team)
 		{
 			Team otherTeam = (Team) other;
-			return teamNumber.equals(otherTeam.teamNumber) && name.equals(otherTeam.name) && status.equals(otherTeam.status);
+			return controlNumber.equals(otherTeam.controlNumber) && name.equals(otherTeam.name) && status.equals(otherTeam.status);
 		}
 		return false;
 	}
@@ -84,7 +79,7 @@ public final class Team extends AbstractEntity
 	public int hashCode()
 	{
 		int result = 1;
-		result += teamNumber.hashCode() * 37;
+		result += controlNumber.hashCode() * 37;
 		result += name.hashCode() * 37;
 		result += status.hashCode() * 37;
 
@@ -94,6 +89,6 @@ public final class Team extends AbstractEntity
 	@Override
 	public String toString()
 	{
-		return "Team [id=" + getId() + ", teamNumber=" + teamNumber + ", name=" + name + ", status=" + status + "]";
+		return "Team [id=" + getId() + ", controlNumber=" + controlNumber + ", name=" + name + ", status=" + status + "]";
 	}
 }

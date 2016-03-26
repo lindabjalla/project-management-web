@@ -11,16 +11,15 @@ import se.grouprich.projectmanagement.model.UserData;
 import se.grouprich.projectmanagement.model.WorkItemData;
 import se.grouprich.projectmanagement.repository.UserRepository;
 import se.grouprich.projectmanagement.repository.WorkItemRepository;
-import se.grouprich.projectmanagement.status.UserStatusData;
-import se.grouprich.projectmanagement.status.WorkItemStatusData;
+import se.grouprich.projectmanagement.status.UserStatus;
+import se.grouprich.projectmanagement.status.WorkItemStatus;
 
 @Service
 public class UserService extends AbstractService<UserData, UserRepository>
 {
 	private WorkItemRepository workItemRepository;
 
-	@Autowired
-	UserService(final UserRepository superRepository, final WorkItemRepository workItemRepository)
+	@Autowired UserService(final UserRepository superRepository, final WorkItemRepository workItemRepository)
 	{
 		super(superRepository);
 		this.workItemRepository = workItemRepository;
@@ -38,19 +37,19 @@ public class UserService extends AbstractService<UserData, UserRepository>
 	@Transactional
 	public UserData inactivateUser(final UserData user)
 	{
-		user.setStatus(UserStatusData.INACTIVE);
+		user.setStatus(UserStatus.INACTIVE);
 
 		final List<WorkItemData> workItemsfoundByUser = workItemRepository.findByUser(user);
 		for (WorkItemData workItem : workItemsfoundByUser)
 		{
-			workItem.setStatus(WorkItemStatusData.UNSTARTED);
+			workItem.setStatus(WorkItemStatus.UNSTARTED);
 			workItemRepository.save(workItem);
 		}
 
 		return createOrUpdate(user);
 	}
 
-	public UserData findByControlNumber(final Long controlNumber)
+	public UserData findByControlNumber(final String controlNumber)
 	{
 		return superRepository.findByControlNumber(controlNumber);
 	}
