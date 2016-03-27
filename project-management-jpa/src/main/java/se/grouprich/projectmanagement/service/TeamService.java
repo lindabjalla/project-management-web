@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.grouprich.projectmanagement.exception.RepositoryException;
 import se.grouprich.projectmanagement.exception.TeamException;
+import se.grouprich.projectmanagement.exception.UserException;
 import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.model.UserData;
 import se.grouprich.projectmanagement.repository.TeamRepository;
@@ -28,19 +29,19 @@ public class TeamService extends AbstractService<TeamData, TeamRepository>
 		return superRepository.findTeamById(id);
 	}
 
-	public TeamData createOrUpdate(final TeamData team)
+	public TeamData createOrUpdate(final TeamData team) throws UserException
 	{
 		return super.createOrUpdate(team);
 	}
 
-	public TeamData inactivateTeam(final TeamData team)
+	public TeamData inactivateTeam(final TeamData team) throws UserException
 	{
 		team.setStatus(TeamStatus.INACTIVE);
 		return createOrUpdate(team);
 	}
 
 	@Transactional
-	public TeamData addUserToTeam(final TeamData team, final UserData user) throws TeamException, RepositoryException
+	public TeamData addUserToTeam(final TeamData team, final UserData user) throws TeamException, RepositoryException, UserException
 	{
 		userRepository.save(user);
 

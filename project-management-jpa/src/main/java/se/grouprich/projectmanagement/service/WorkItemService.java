@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import se.grouprich.projectmanagement.exception.UserException;
 import se.grouprich.projectmanagement.exception.WorkItemException;
 import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.model.UserData;
@@ -30,12 +31,12 @@ public class WorkItemService extends AbstractService<WorkItemData, WorkItemRepos
 		this.userRepository = userRepository;
 	}
 
-	public WorkItemData createOrUpdate(final WorkItemData workItem)
+	public WorkItemData createOrUpdate(final WorkItemData workItem) throws UserException
 	{
 		return super.createOrUpdate(workItem);
 	}
 
-	public WorkItemData changeWorkItemStatus(final WorkItemData workItem, final WorkItemStatus status)
+	public WorkItemData changeWorkItemStatus(final WorkItemData workItem, final WorkItemStatus status) throws UserException
 	{
 		workItem.setStatus(status);
 		return createOrUpdate(workItem);
@@ -49,7 +50,7 @@ public class WorkItemService extends AbstractService<WorkItemData, WorkItemRepos
 	}
 
 	@Transactional
-	public WorkItemData assignWorkItemToUser(final UserData user, final WorkItemData workItem) throws WorkItemException
+	public WorkItemData assignWorkItemToUser(final UserData user, final WorkItemData workItem) throws WorkItemException, UserException
 	{
 		final UserData savedUser = userRepository.save(user);
 		if (!UserStatus.ACTIVE.equals(savedUser.getStatus()))

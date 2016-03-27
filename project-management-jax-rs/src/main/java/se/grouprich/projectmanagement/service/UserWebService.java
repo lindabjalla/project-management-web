@@ -5,6 +5,7 @@ package se.grouprich.projectmanagement.service;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import se.grouprich.projectmanagement.Loader;
+import se.grouprich.projectmanagement.exception.UserException;
 import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.model.User;
 import se.grouprich.projectmanagement.model.UserData;
@@ -31,7 +32,7 @@ public final class UserWebService
 	private UriInfo uriInfo;
 
 	@POST
-	public Response createUser(User user)
+	public Response createUser(User user) throws UserException
 	{
 		UserData createdUser = userService.createOrUpdate(userMapper.convertUserToUserData(user));
 		URI location = uriInfo.getAbsolutePathBuilder().path(getClass(), "getUser").build(createdUser.getId());
@@ -57,7 +58,7 @@ public final class UserWebService
 
 	@PUT
 	@Path("{id}")
-	public Response updateUser(@PathParam("id") Long id, User user)
+	public Response updateUser(@PathParam("id") Long id, User user) throws UserException
 	{
 		UserData userData = userService.findById(id);
 		if (userData == null)

@@ -4,6 +4,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import se.grouprich.projectmanagement.exception.RepositoryException;
 import se.grouprich.projectmanagement.exception.TeamException;
+import se.grouprich.projectmanagement.exception.UserException;
 import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.model.UserData;
 import se.grouprich.projectmanagement.service.TeamService;
@@ -12,7 +13,7 @@ import se.grouprich.projectmanagement.service.WorkItemService;
 
 public final class Main
 {
-	public static void main(String[] args) throws TeamException, RepositoryException
+	public static void main(String[] args) throws TeamException, RepositoryException, UserException
 	{
 		try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext())
 		{
