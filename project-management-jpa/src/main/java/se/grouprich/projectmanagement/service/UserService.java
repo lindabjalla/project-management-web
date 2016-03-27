@@ -12,7 +12,8 @@ import java.util.List;
 @Service
 public class UserService extends AbstractService<UserData, UserRepository>
 {
-	@Autowired UserService(final UserRepository userRepository)
+	@Autowired
+	UserService(final UserRepository userRepository)
 	{
 		super(userRepository);
 	}
