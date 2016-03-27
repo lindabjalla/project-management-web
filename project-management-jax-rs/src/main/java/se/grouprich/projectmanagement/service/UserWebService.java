@@ -5,6 +5,7 @@ package se.grouprich.projectmanagement.service;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import se.grouprich.projectmanagement.Loader;
+import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.model.User;
 import se.grouprich.projectmanagement.model.UserData;
 import se.grouprich.projectmanagement.model.mapper.UserMapper;
@@ -21,9 +22,9 @@ import static javax.ws.rs.core.Response.Status;
 @Consumes(MediaType.APPLICATION_JSON)
 public final class UserWebService
 {
-	private static UserService userService = Loader.getBean(UserService.class);
-	private static TeamService teamService = Loader.getBean(TeamService.class);
-	UserMapper userConverter = new UserMapper();
+	private static final UserService userService = Loader.getBean(UserService.class);
+	private static final TeamService teamService = Loader.getBean(TeamService.class);
+	private static final UserMapper userMapper = new UserMapper();
 	//	private static UserService userService = ContextLoader.getBean(UserService.class);
 
 	@Context
@@ -32,10 +33,26 @@ public final class UserWebService
 	@POST
 	public Response createUser(User user)
 	{
-		UserData createdUser = userService.createOrUpdate(userConverter.convertUserToUserData(user));
+		UserData createdUser = userService.createOrUpdate(userMapper.convertUserToUserData(user));
 		URI location = uriInfo.getAbsolutePathBuilder().path(getClass(), "getUser").build(createdUser.getId());
 
 		return Response.created(location).build();
+	}
+
+	@GET
+	@Path("{id}")
+	public Response getUser(@PathParam("id") Long id)
+	{
+		UserData userData = userService.findById(id);
+
+		if (userData == null)
+		{
+			throw new WebApplicationException(Status.NOT_FOUND);
+		}
+
+		User user = userMapper.convertUserDataToUser(userData);
+
+		return Response.ok(user).build();
 	}
 
 	@PUT
@@ -48,7 +65,7 @@ public final class UserWebService
 			throw new WebApplicationException(Status.NOT_FOUND);
 		}
 
-		UserData updatedUserData = userConverter.updateUserData(user, userData);
+		UserData updatedUserData = userMapper.updateUserData(user, userData);
 		userService.createOrUpdate(updatedUserData);
 
 		return Response.noContent().build();
@@ -67,22 +84,6 @@ public final class UserWebService
 	}
 
 	@GET
-	@Path("{id}")
-	public Response getUser(@PathParam("id") Long id)
-	{
-		UserData userData = userService.findById(id);
-
-		if (userData == null)
-		{
-			throw new WebApplicationException(Status.NOT_FOUND);
-		}
-
-		User user = userConverter.convertUserDataToUser(userData);
-
-		return Response.ok(user).build();
-	}
-
-	@GET
 	@Path("user-number/{controlNumber}")
 	public Response getUserByControlNumber(@PathParam("controlNumber") String controlNumber)
 	{
@@ -93,7 +94,7 @@ public final class UserWebService
 			throw new WebApplicationException(Status.NOT_FOUND);
 		}
 
-		User user = userConverter.convertUserDataToUser(userData);
+		User user = userMapper.convertUserDataToUser(userData);
 
 		return Response.ok(user).build();
 	}
@@ -110,7 +111,7 @@ public final class UserWebService
 			throw new WebApplicationException(Status.NOT_FOUND);
 		}
 
-		GenericEntity<List<User>> users = userConverter.convertList(userDataList);
+		GenericEntity<List<User>> users = userMapper.convertList(userDataList);
 
 		return Response.ok(users).build();
 	}
@@ -125,7 +126,18 @@ public final class UserWebService
 		}
 
 		List<UserData> userDataList = Lists.newArrayList(userDataIterable);
-		GenericEntity<List<User>> users = userConverter.convertList(userDataList);
+		GenericEntity<List<User>> users = userMapper.convertList(userDataList);
+
+		return Response.ok(users).build();
+	}
+
+	@GET
+	@Path("team/{teamId}")
+	public Response getUsersByTeam(@PathParam("teamId") Long teamId)
+	{
+		TeamData teamData = teamService.findById(teamId);
+		List<UserData> userDataList = userService.findByTeam(teamData);
+		GenericEntity<List<User>> users = userMapper.convertList(userDataList);
 
 		return Response.ok(users).build();
 	}

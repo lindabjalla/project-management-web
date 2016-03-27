@@ -3,12 +3,7 @@ package se.grouprich.projectmanagement.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import se.grouprich.projectmanagement.status.TeamStatus;
 
@@ -50,9 +45,10 @@ public class TeamData extends AbstractEntityData
 		return status;
 	}
 
-	public void setName(final String name)
+	public TeamData setName(final String name)
 	{
 		this.name = name;
+		return this;
 	}
 
 	public void setStatus(final TeamStatus status)

@@ -2,12 +2,13 @@ package se.grouprich.projectmanagement.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import org.springframework.transaction.annotation.Transactional;
 import se.grouprich.projectmanagement.model.AbstractEntityData;
 
-public abstract class AbstractService<E extends AbstractEntityData, R extends PagingAndSortingRepository<E, Long>>
+public abstract class AbstractService<E extends AbstractEntityData, R extends CrudRepository<E, Long>>
 {
 	protected R superRepository;
 
@@ -37,10 +38,5 @@ public abstract class AbstractService<E extends AbstractEntityData, R extends Pa
 	public Iterable<E> findAll()
 	{
 		return superRepository.findAll();
-	}
-
-	public Page<E> findAll(Pageable pageable)
-	{
-		return superRepository.findAll(pageable);
 	}
 }

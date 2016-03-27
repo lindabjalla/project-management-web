@@ -45,7 +45,7 @@ public class AppConfig
 		HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
 		adapter.setDatabase(Database.MYSQL);
 		adapter.setGenerateDdl(true);
-		//adapter.setShowSql(true); //visar Sql-log
+		adapter.setShowSql(true); //visar Sql-log
 
 		return adapter;
 	}

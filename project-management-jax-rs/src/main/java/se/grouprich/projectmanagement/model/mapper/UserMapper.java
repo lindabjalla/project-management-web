@@ -12,14 +12,13 @@ import se.grouprich.projectmanagement.status.UserStatus;
 
 import javax.ws.rs.core.GenericEntity;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public final class UserMapper
 {
 	private final MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
 	private final MapperFacade mapper = mapperFactory.getMapperFacade();
-	private static TeamService teamService = Loader.getBean(TeamService.class);
+	private static final TeamService teamService = Loader.getBean(TeamService.class);
 
 	public UserMapper()
 	{

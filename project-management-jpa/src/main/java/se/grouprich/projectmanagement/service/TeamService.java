@@ -16,11 +16,16 @@ public class TeamService extends AbstractService<TeamData, TeamRepository>
 {
 	private UserRepository userRepository;
 
-	@Autowired
-	TeamService(final TeamRepository superRepository, final UserRepository userRepository)
+	@Autowired TeamService(final TeamRepository teamRepository, final UserRepository userRepository)
 	{
-		super(superRepository);
+		super(teamRepository);
 		this.userRepository = userRepository;
+	}
+
+	@Override
+	public TeamData findById(Long id)
+	{
+		return superRepository.findTeamById(id);
 	}
 
 	public TeamData createOrUpdate(final TeamData team)
