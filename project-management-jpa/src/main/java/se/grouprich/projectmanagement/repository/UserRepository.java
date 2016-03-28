@@ -1,17 +1,14 @@
 package se.grouprich.projectmanagement.repository;
 
-import java.util.List;
-
-import org.springframework.data.repository.PagingAndSortingRepository;
-
+import org.springframework.data.repository.CrudRepository;
 import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.model.UserData;
 
-public interface UserRepository extends PagingAndSortingRepository<UserData, Long>
+import java.util.List;
+
+public interface UserRepository extends CrudRepository<UserData, Long>
 {
 	UserData findByControlNumber(String controlNumber);
-
-	UserData findByFirstNameAndLastNameAndUsername(String firstName, String lastName, String username);
 
 	List<UserData> findAllByFirstNameOrLastNameOrUsername(String firstName, String lastName, String username);
 
