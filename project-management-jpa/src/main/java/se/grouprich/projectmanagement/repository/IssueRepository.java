@@ -11,9 +11,9 @@ import se.grouprich.projectmanagement.model.WorkItemData;
 
 public interface IssueRepository extends PagingAndSortingRepository<IssueData, Long>
 {
-//	@Query("SELECT i.workItem FROM #{#entityName} i")
-//	List<WorkItemData> findWorkItemsHavingIssue();
+	@Query("SELECT i.workItem FROM #{#entityName} i")
+	List<WorkItemData> findWorkItemsHavingIssue();
 	
-//	@Transactional
-//	List<IssueData> removeByWorkItem(WorkItemData workItem);
+	@Transactional
+	List<IssueData> removeByWorkItem(WorkItemData workItem);
 }
