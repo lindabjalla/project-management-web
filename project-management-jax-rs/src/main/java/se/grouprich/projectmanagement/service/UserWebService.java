@@ -1,7 +1,5 @@
 package se.grouprich.projectmanagement.service;
 
-//import se.grouprich.projectmanagement.ContextLoader;
-
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import se.grouprich.projectmanagement.Loader;
@@ -26,7 +24,6 @@ public final class UserWebService
 	private static final UserService userService = Loader.getBean(UserService.class);
 	private static final TeamService teamService = Loader.getBean(TeamService.class);
 	private static final UserMapper userMapper = new UserMapper();
-	//	private static UserService userService = ContextLoader.getBean(UserService.class);
 
 	@Context
 	private UriInfo uriInfo;
