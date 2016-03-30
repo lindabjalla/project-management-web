@@ -1,8 +1,8 @@
 package se.grouprich.projectmanagement.service;
 
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import se.grouprich.projectmanagement.Loader;
+import se.grouprich.projectmanagement.exception.RepositoryException;
 import se.grouprich.projectmanagement.exception.UserException;
 import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.model.User;
@@ -10,11 +10,12 @@ import se.grouprich.projectmanagement.model.UserData;
 import se.grouprich.projectmanagement.model.mapper.UserMapper;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.List;
-
-import static javax.ws.rs.core.Response.Status;
 
 @Path("/user")
 @Produces(MediaType.APPLICATION_JSON)
@@ -39,15 +40,9 @@ public final class UserWebService
 
 	@GET
 	@Path("{id}")
-	public Response getUser(@PathParam("id") Long id)
+	public Response getUser(@PathParam("id") Long id) throws RepositoryException
 	{
 		UserData userData = userService.findById(id);
-
-		if (userData == null)
-		{
-			throw new WebApplicationException(Status.NOT_FOUND);
-		}
-
 		User user = userMapper.convertUserDataToUser(userData);
 
 		return Response.ok(user).build();
@@ -55,14 +50,9 @@ public final class UserWebService
 
 	@PUT
 	@Path("{id}")
-	public Response updateUser(@PathParam("id") Long id, User user) throws UserException
+	public Response updateUser(@PathParam("id") Long id, User user) throws UserException, RepositoryException
 	{
 		UserData userData = userService.findById(id);
-		if (userData == null)
-		{
-			throw new WebApplicationException(Status.NOT_FOUND);
-		}
-
 		UserData updatedUserData = userMapper.updateUserData(user, userData);
 		userService.createOrUpdate(updatedUserData);
 
@@ -71,27 +61,17 @@ public final class UserWebService
 
 	@DELETE
 	@Path("{id}")
-	public Response deleteUser(@PathParam("id") Long id)
+	public Response deleteUser(@PathParam("id") Long id) throws RepositoryException
 	{
-		if (userService.findById(id) == null)
-		{
-			throw new WebApplicationException(Status.NOT_FOUND);
-		}
 		userService.deleteById(id);
 		return Response.noContent().build();
 	}
 
 	@GET
-	@Path("user-number/{controlNumber}")
-	public Response getUserByControlNumber(@PathParam("controlNumber") String controlNumber)
+	@Path("control-id/{controlId}")
+	public Response getUserByControlNumber(@PathParam("controlId") String controlId) throws RepositoryException
 	{
-		UserData userData = userService.findByControlNumber(controlNumber);
-
-		if (userData == null)
-		{
-			throw new WebApplicationException(Status.NOT_FOUND);
-		}
-
+		UserData userData = userService.findByControlId(controlId);
 		User user = userMapper.convertUserDataToUser(userData);
 
 		return Response.ok(user).build();
@@ -100,42 +80,31 @@ public final class UserWebService
 	@GET
 	@Path("query")
 	public Response getUserByAnyName(@QueryParam("first-name") String firstName, @QueryParam("last-name") String lastName,
-			@QueryParam("username") String username)
+			@QueryParam("username") String username) throws RepositoryException
 	{
-		List<UserData> userDataList = userService.searchUserByFirstNameOrLastNameOrUsername(firstName, lastName, username);
-
-		if (userDataList.isEmpty())
-		{
-			throw new WebApplicationException(Status.NOT_FOUND);
-		}
-
-		GenericEntity<List<User>> users = userMapper.convertList(userDataList);
+		List<UserData> userDataList = userService.searchUsersByFirstNameOrLastNameOrUsername(firstName, lastName, username);
+		List<User> users = userMapper.convertList(userDataList);
 
 		return Response.ok(users).build();
 	}
 
 	@GET
-	public Response getAllUsers()
+	public Response getAllUsers() throws RepositoryException
 	{
 		Iterable<UserData> userDataIterable = userService.findAll();
-		if (Iterables.isEmpty(userDataIterable))
-		{
-			throw new WebApplicationException(Status.NOT_FOUND);
-		}
-
 		List<UserData> userDataList = Lists.newArrayList(userDataIterable);
-		GenericEntity<List<User>> users = userMapper.convertList(userDataList);
+		List<User> users = userMapper.convertList(userDataList);
 
 		return Response.ok(users).build();
 	}
 
 	@GET
 	@Path("team/{teamId}")
-	public Response getUsersByTeam(@PathParam("teamId") Long teamId)
+	public Response getUsersByTeam(@PathParam("teamId") Long teamId) throws RepositoryException
 	{
 		TeamData teamData = teamService.findById(teamId);
 		List<UserData> userDataList = userService.findByTeam(teamData);
-		GenericEntity<List<User>> users = userMapper.convertList(userDataList);
+		List<User> users = userMapper.convertList(userDataList);
 
 		return Response.ok(users).build();
 	}

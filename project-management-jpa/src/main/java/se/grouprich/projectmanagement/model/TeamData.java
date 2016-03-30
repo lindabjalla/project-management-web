@@ -77,7 +77,7 @@ public class TeamData extends AbstractEntityData
 		if (other instanceof TeamData)
 		{
 			TeamData otherTeam = (TeamData) other;
-			return getControlNumber().equals(otherTeam.getControlNumber()) && name.equals(otherTeam.name) && status.equals(otherTeam.status);
+			return getControlId().equals(otherTeam.getControlId()) && name.equals(otherTeam.name) && status.equals(otherTeam.status);
 		}
 		return false;
 	}
@@ -86,7 +86,7 @@ public class TeamData extends AbstractEntityData
 	public int hashCode()
 	{
 		int result = 1;
-		result += getControlNumber().hashCode() * 37;
+		result += getControlId().hashCode() * 37;
 		result += name.hashCode() * 37;
 		result += status.hashCode() * 37;
 
@@ -96,6 +96,6 @@ public class TeamData extends AbstractEntityData
 	@Override
 	public String toString()
 	{
-		return "Team [id=" + getId() + ", controlNumber=" + getControlNumber() + ", name=" + name + ", status=" + status + "]";
+		return "Team [id=" + getId() + ", controlId=" + getControlId() + ", name=" + name + ", status=" + status + "]";
 	}
 }

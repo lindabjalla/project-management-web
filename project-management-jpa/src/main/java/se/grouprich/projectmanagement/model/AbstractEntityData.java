@@ -15,11 +15,11 @@ public abstract class AbstractEntityData
 	private Long id;
 
 	@Column(nullable = false, unique = true)
-	private String controlNumber;
+	private String controlId;
 
 	protected AbstractEntityData()
 	{
-		controlNumber = RandomStringUtils.randomAlphanumeric(6);
+		controlId = RandomStringUtils.randomAlphanumeric(6);
 	}
 
 	public Long getId()
@@ -27,8 +27,8 @@ public abstract class AbstractEntityData
 		return id;
 	}
 
-	public String getControlNumber()
+	public String getControlId()
 	{
-		return controlNumber;
+		return controlId;
 	}
 }

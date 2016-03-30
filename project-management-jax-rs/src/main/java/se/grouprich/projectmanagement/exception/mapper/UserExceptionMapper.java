@@ -11,7 +11,8 @@ import static javax.ws.rs.core.Response.Status;
 @Provider
 public final class UserExceptionMapper implements ExceptionMapper<UserException>
 {
-	@Override public Response toResponse(UserException exception)
+	@Override
+	public Response toResponse(UserException exception)
 	{
 		return Response.status(Status.BAD_REQUEST).entity(exception.getMessage()).build();
 	}

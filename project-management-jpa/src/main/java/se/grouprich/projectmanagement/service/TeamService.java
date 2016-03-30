@@ -19,13 +19,18 @@ public class TeamService extends AbstractService<TeamData, TeamRepository>
 
 	@Autowired TeamService(final TeamRepository teamRepository, final UserRepository userRepository)
 	{
-		super(teamRepository);
+		super(teamRepository, TeamData.class);
 		this.userRepository = userRepository;
 	}
 
 	@Override
-	public TeamData findById(Long id)
+	public TeamData findById(Long id) throws RepositoryException
 	{
+		TeamData teamData = superRepository.findTeamById(id);
+		if (teamData == null)
+		{
+			throw new RepositoryException("Team with id: " + id + " was not found");
+		}
 		return superRepository.findTeamById(id);
 	}
 

@@ -3,14 +3,14 @@ package se.grouprich.projectmanagement.model;
 public abstract class AbstractEntity
 {
 	private Long id;
-	private String controlNumber;
+	private String controlId;
 
 	public AbstractEntity(){}
 
-	public AbstractEntity(Long id, String controlNumber)
+	public AbstractEntity(Long id, String controlId)
 	{
 		this.id = id;
-		this.controlNumber = controlNumber;
+		this.controlId = controlId;
 	}
 	
 	public Long getId()
@@ -23,13 +23,13 @@ public abstract class AbstractEntity
 		this.id = id;
 	}
 
-	public String getControlNumber()
+	public String getControlId()
 	{
-		return controlNumber;
+		return controlId;
 	}
 
-	public void setControlNumber(String controlNumber)
+	public void setControlId(String controlId)
 	{
-		this.controlNumber = controlNumber;
+		this.controlId = controlId;
 	}
 }

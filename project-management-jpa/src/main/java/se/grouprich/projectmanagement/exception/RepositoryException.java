@@ -1,5 +1,9 @@
 package se.grouprich.projectmanagement.exception;
 
-public class RepositoryException extends Exception
+public final class RepositoryException extends Exception
 {
+	public RepositoryException(String message)
+	{
+		super(message);
+	}
 }

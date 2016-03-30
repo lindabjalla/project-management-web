@@ -111,7 +111,7 @@ public class UserData extends AbstractEntityData
 		if (other instanceof UserData)
 		{
 			UserData otherUser = (UserData) other;
-			return getControlNumber().equals(otherUser.getControlNumber()) && username.equals(otherUser.username)
+			return getControlId().equals(otherUser.getControlId()) && username.equals(otherUser.username)
 														   				   && password.equals(otherUser.password)
 														   				   && firstName.equals(otherUser.firstName)
 														   				   && lastName.equals(otherUser.lastName)
@@ -124,7 +124,7 @@ public class UserData extends AbstractEntityData
 	public int hashCode()
 	{
 		int result = 1;
-		result += getControlNumber().hashCode() * 37;
+		result += getControlId().hashCode() * 37;
 		result += username.hashCode() * 37;
 		result += password.hashCode() * 37;
 		result += firstName.hashCode() * 37;
@@ -137,7 +137,7 @@ public class UserData extends AbstractEntityData
 	@Override
 	public String toString()
 	{
-		return "User [id=" + getId() + ", userNumber=" + getControlNumber() + ", username=" + username + ", password=" + password + ", firstName="
+		return "User [id=" + getId() + ", controlId=" + getControlId() + ", username=" + username + ", password=" + password + ", firstName="
 				+ firstName + ", lastName=" + lastName + ", status=" + status + ", team=" + team + "]";
 	}
 }

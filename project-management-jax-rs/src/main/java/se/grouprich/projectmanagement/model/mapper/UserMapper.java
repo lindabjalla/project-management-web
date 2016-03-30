@@ -4,13 +4,13 @@ import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
 import se.grouprich.projectmanagement.Loader;
+import se.grouprich.projectmanagement.exception.RepositoryException;
 import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.model.User;
 import se.grouprich.projectmanagement.model.UserData;
 import se.grouprich.projectmanagement.service.TeamService;
 import se.grouprich.projectmanagement.status.UserStatus;
 
-import javax.ws.rs.core.GenericEntity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +43,7 @@ public final class UserMapper
 		return user;
 	}
 
-	public UserData updateUserData(final User user, final UserData userData)
+	public UserData updateUserData(final User user, final UserData userData) throws RepositoryException
 	{
 		userData.setUsername(user.getUsername()).setPassword(user.getPassword()).setStatus(UserStatus.valueOf(user.getStatus()));
 		if (user.getTeamId() != null)
@@ -58,12 +58,11 @@ public final class UserMapper
 		return userData;
 	}
 
-	public GenericEntity<List<User>> convertList(List<UserData> userDataList)
+	public List<User> convertList(List<UserData> userDataList)
 	{
 		List<User> users = new ArrayList<>();
 		userDataList.forEach(userData -> users.add(convertUserDataToUser(userData)));
-		GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
-		return entity;
+		return users;
 	}
 }
 
