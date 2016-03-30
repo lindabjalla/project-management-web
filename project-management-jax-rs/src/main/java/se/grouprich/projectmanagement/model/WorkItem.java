@@ -12,13 +12,11 @@ public final class WorkItem extends AbstractEntity
 	private String description;
 	private String status;
 
-	protected WorkItem()
-	{
-	}
+	protected WorkItem() {}
 
-	public WorkItem(Long id, String controlNumber, String title, String status)
+	public WorkItem(Long id, String controlId, String title, String status)
 	{
-		super(id, controlNumber);
+		super(id, controlId);
 		this.title = title;
 		this.status = status;
 	}
