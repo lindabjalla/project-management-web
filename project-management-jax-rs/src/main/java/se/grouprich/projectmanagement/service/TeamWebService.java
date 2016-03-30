@@ -1,21 +1,35 @@
 package se.grouprich.projectmanagement.service;
 
+import java.net.URI;
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.UriInfo;
+
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+
 import se.grouprich.projectmanagement.Loader;
 import se.grouprich.projectmanagement.exception.RepositoryException;
 import se.grouprich.projectmanagement.exception.TeamException;
+import se.grouprich.projectmanagement.exception.UserException;
 import se.grouprich.projectmanagement.model.Team;
 import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.model.UserData;
 import se.grouprich.projectmanagement.model.mapper.TeamMapper;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
-import java.net.URI;
-import java.util.List;
-
-import static javax.ws.rs.core.Response.Status;
 
 @Path("/team")
 @Produces(MediaType.APPLICATION_JSON)
@@ -30,7 +44,7 @@ public class TeamWebService
 	private UriInfo uriInfo;
 
 	@POST
-	public Response createTeam(Team team)
+	public Response createTeam(Team team) throws UserException
 	{
 		TeamData createdTeam = teamService.createOrUpdate(teamMapper.convertTeamToTeamData(team));
 		URI location = uriInfo.getAbsolutePathBuilder().path(getClass(), "getTeam").build(createdTeam.getId());
@@ -52,7 +66,7 @@ public class TeamWebService
 
 	@PUT
 	@Path("{id}")
-	public Response updateTeam(@PathParam("id") Long id, Team team)
+	public Response updateTeam(@PathParam("id") Long id, Team team) throws UserException
 	{
 		TeamData teamData = teamService.findById(id);
 
@@ -98,7 +112,7 @@ public class TeamWebService
 
 	@PUT
 	@Path("{teamId}/user/{userId}")
-	public Response addUserToTeam(@PathParam("teamId") Long teamId, @PathParam("userId") Long userId) throws TeamException, RepositoryException
+	public Response addUserToTeam(@PathParam("teamId") Long teamId, @PathParam("userId") Long userId) throws TeamException, RepositoryException, UserException
 	{
 		TeamData teamData = teamService.findById(teamId);
 		UserData userData = userService.findById(userId);
