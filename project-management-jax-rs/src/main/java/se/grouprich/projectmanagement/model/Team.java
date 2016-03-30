@@ -7,9 +7,9 @@ public final class Team extends AbstractEntity
 
 	public Team(){}
 
-	public Team(Long id, String controlNumber, String name, String status)
+	public Team(Long id, String controlId, String name, String status)
 	{
-		super(id, controlNumber);
+		super(id, controlId);
 		this.name = name;
 		this.status = status;
 	}
@@ -64,6 +64,6 @@ public final class Team extends AbstractEntity
 	@Override
 	public String toString()
 	{
-		return "Team [id=" + getId() + ", controlNumber=" + getControlId() + ", name=" + name + ", status=" + status + "]";
+		return "Team [id=" + getId() + ", controlId=" + getControlId() + ", name=" + name + ", status=" + status + "]";
 	}
 }
