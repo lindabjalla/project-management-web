@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserRepository extends CrudRepository<UserData, Long>
 {
-	UserData findByControlNumber(String controlNumber);
+	UserData findByControlId(String controlId);
 
 	List<UserData> findAllByFirstNameOrLastNameOrUsername(String firstName, String lastName, String username);
 

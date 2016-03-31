@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import se.grouprich.projectmanagement.Loader;
+import se.grouprich.projectmanagement.exception.RepositoryException;
 import se.grouprich.projectmanagement.exception.UserException;
 import se.grouprich.projectmanagement.model.Issue;
 import se.grouprich.projectmanagement.model.IssueData;
@@ -45,7 +46,7 @@ public class IssueWebService
 
 	@GET
 	@Path("{id}")
-	public Response getIssue(@PathParam("id") Long id)
+	public Response getIssue(@PathParam("id") Long id) throws RepositoryException
 	{
 		IssueData issueData = issueService.findById(id);
 		
@@ -56,7 +57,7 @@ public class IssueWebService
 	
 	@PUT //Lägg till en Issue till WorkItem
 	@Path("{id}")
-	public Response updateIssueByWorkItem(@PathParam("id") Long id, Issue issue) throws UserException
+	public Response updateIssueByWorkItem(@PathParam("id") Long id, Issue issue) throws UserException, RepositoryException
 	{
 		IssueData issueData = issueService.findById(id);
 		
@@ -73,7 +74,7 @@ public class IssueWebService
 	
 	@DELETE
 	@Path("{id}")
-	public Response deleteIssue(@PathParam("id") Long id)
+	public Response deleteIssue(@PathParam("id") Long id) throws RepositoryException
 	{
 		if (issueService.findById(id) == null)
 		{
@@ -86,7 +87,7 @@ public class IssueWebService
 	
 	@PUT
 	@Path("{id}")
-	public Response updateIssue(@PathParam("id") Long id, Issue issue) throws UserException
+	public Response updateIssue(@PathParam("id") Long id, Issue issue) throws UserException, RepositoryException
 	{
 		IssueData issueData = issueService.findById(id);
 		

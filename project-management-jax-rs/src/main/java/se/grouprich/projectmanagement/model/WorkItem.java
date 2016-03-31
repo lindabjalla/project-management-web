@@ -58,10 +58,10 @@ public final class WorkItem extends AbstractEntity
 		if (other instanceof WorkItem)
 		{
 			WorkItem otherWorkItem = (WorkItem) other;
-			return getControlNumber().equals(otherWorkItem.getControlNumber()) && title.equals(otherWorkItem.title) 
-																			   && user.equals(otherWorkItem.user) 
-													 					  	   && description.equals(otherWorkItem.description) 
-													 					  	   && status.equals(otherWorkItem.status);
+			return getControlId().equals(otherWorkItem.getControlId()) && title.equals(otherWorkItem.title) 
+																	   && user.equals(otherWorkItem.user) 
+													 				   && description.equals(otherWorkItem.description) 
+													 				   && status.equals(otherWorkItem.status);
 		}
 		return false;
 	}
@@ -70,7 +70,7 @@ public final class WorkItem extends AbstractEntity
 	public int hashCode()
 	{
 		int result = 1;
-		result += getControlNumber().hashCode() * 37;
+		result += getControlId().hashCode() * 37;
 		result += title.hashCode() * 37;
 		result += user.hashCode() * 37;
 		result += description.hashCode() * 37;

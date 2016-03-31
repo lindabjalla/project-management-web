@@ -1,21 +1,19 @@
 package se.grouprich.projectmanagement.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import se.grouprich.projectmanagement.exception.UserException;
 import se.grouprich.projectmanagement.exception.WorkItemException;
 import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.model.UserData;
 import se.grouprich.projectmanagement.model.WorkItemData;
-import se.grouprich.projectmanagement.repository.IssueRepository;
 import se.grouprich.projectmanagement.repository.UserRepository;
 import se.grouprich.projectmanagement.repository.WorkItemRepository;
 import se.grouprich.projectmanagement.status.UserStatus;
 import se.grouprich.projectmanagement.status.WorkItemStatus;
+
+import java.util.List;
 
 @Service
 public class WorkItemService extends AbstractService<WorkItemData, WorkItemRepository>
@@ -24,9 +22,9 @@ public class WorkItemService extends AbstractService<WorkItemData, WorkItemRepos
 	private UserRepository userRepository;
 
 	@Autowired
-	WorkItemService(final WorkItemRepository workItemRepository, final IssueRepository issueRepository, final UserRepository userRepository)
+	WorkItemService(final WorkItemRepository workItemRepository, /*final IssueRepository issueRepository, */final UserRepository userRepository)
 	{
-		super(workItemRepository);
+		super(workItemRepository, WorkItemData.class);
 //		this.issueRepository = issueRepository;
 		this.userRepository = userRepository;
 	}

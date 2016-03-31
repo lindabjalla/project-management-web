@@ -1,10 +1,10 @@
 package se.grouprich.projectmanagement.exception;
 
-public class RepositoryException extends Exception
-{	
+public final class RepositoryException extends Exception
+{
 	private static final long serialVersionUID = 1L;
 
-	public RepositoryException(String message) 
+	public RepositoryException(String message)
 	{
 		super(message);
 	}

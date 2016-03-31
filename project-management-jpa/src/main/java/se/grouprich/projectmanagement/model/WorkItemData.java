@@ -78,7 +78,7 @@ public class WorkItemData extends AbstractEntityData
 		if (other instanceof WorkItemData)
 		{
 			WorkItemData otherWorkItem = (WorkItemData) other;
-			return getControlNumber().equals(otherWorkItem.getControlNumber()) && title.equals(otherWorkItem.title)
+			return getControlId().equals(otherWorkItem.getControlId()) && title.equals(otherWorkItem.title)
 					&& status.equals(otherWorkItem.status);
 		}
 		return false;
@@ -88,7 +88,7 @@ public class WorkItemData extends AbstractEntityData
 	public int hashCode()
 	{
 		int result = 1;
-		result += getControlNumber().hashCode() * 37;
+		result += getControlId().hashCode() * 37;
 		result += title.hashCode() * 37;
 		result += status.hashCode() * 37;
 
@@ -98,6 +98,6 @@ public class WorkItemData extends AbstractEntityData
 	@Override
 	public String toString()
 	{
-		return "WorkItem [id=" + getId() + ", controlNumber=" + getControlNumber() + ", title=" + title + ", user=" + user + ", description=" + description + ", status=" + status + "]";
+		return "WorkItem [id=" + getId() + ", controlId=" + getControlId() + ", title=" + title + ", user=" + user + ", description=" + description + ", status=" + status + "]";
 	}
 }

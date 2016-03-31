@@ -8,7 +8,6 @@ import se.grouprich.projectmanagement.exception.IssueException;
 
 public class IssueExceptionMapper implements ExceptionMapper<IssueException>
 {
-
 	@Override
 	public Response toResponse(IssueException issueException) 
 	{

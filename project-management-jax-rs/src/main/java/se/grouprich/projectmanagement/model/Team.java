@@ -1,7 +1,5 @@
 package se.grouprich.projectmanagement.model;
 
-import java.util.Set;
-
 public final class Team extends AbstractEntity
 {
 	private String name;
@@ -9,9 +7,9 @@ public final class Team extends AbstractEntity
 
 	public Team(){}
 
-	public Team(Long id, String controlNumber, String name, String status)
+	public Team(Long id, String controlId, String name, String status)
 	{
-		super(id, controlNumber);
+		super(id, controlId);
 		this.name = name;
 		this.status = status;
 	}
@@ -47,7 +45,7 @@ public final class Team extends AbstractEntity
 		if (other instanceof Team)
 		{
 			Team otherTeam = (Team) other;
-			return getControlNumber().equals(otherTeam.getControlNumber()) && name.equals(otherTeam.name) && status.equals(otherTeam.status);
+			return getControlId().equals(otherTeam.getControlId()) && name.equals(otherTeam.name) && status.equals(otherTeam.status);
 		}
 		return false;
 	}
@@ -56,7 +54,7 @@ public final class Team extends AbstractEntity
 	public int hashCode()
 	{
 		int result = 1;
-		result += getControlNumber().hashCode() * 37;
+		result += getControlId().hashCode() * 37;
 		result += name.hashCode() * 37;
 		result += status.hashCode() * 37;
 
@@ -66,6 +64,6 @@ public final class Team extends AbstractEntity
 	@Override
 	public String toString()
 	{
-		return "Team [id=" + getId() + ", controlNumber=" + getControlNumber() + ", name=" + name + ", status=" + status + "]";
+		return "Team [id=" + getId() + ", controlId=" + getControlId() + ", name=" + name + ", status=" + status + "]";
 	}
 }

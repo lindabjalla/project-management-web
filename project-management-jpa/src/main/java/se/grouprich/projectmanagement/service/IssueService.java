@@ -21,7 +21,7 @@ public class IssueService extends AbstractService<IssueData, IssueRepository>
 	@Autowired
 	IssueService(final IssueRepository issueRepository)
 	{
-		super(issueRepository);
+		super(issueRepository, IssueData.class);
 		this.issueRepository = issueRepository;
 	}
 
