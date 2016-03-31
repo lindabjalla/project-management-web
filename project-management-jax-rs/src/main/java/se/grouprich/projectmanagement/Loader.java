@@ -1,14 +1,11 @@
 package se.grouprich.projectmanagement;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
-
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import se.grouprich.projectmanagement.service.UserService;
-import se.grouprich.projectmanagement.service.WorkItemService;
 
 @ApplicationPath("/*")
 public final class Loader extends Application

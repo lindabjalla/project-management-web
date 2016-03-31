@@ -69,7 +69,7 @@ public final class UserWebService
 
 	@GET
 	@Path("control-id/{controlId}")
-	public Response getUserByControlNumber(@PathParam("controlId") String controlId) throws RepositoryException
+	public Response getUserByControlId(@PathParam("controlId") String controlId) throws RepositoryException
 	{
 		UserData userData = userService.findByControlId(controlId);
 		User user = userMapper.convertUserDataToUser(userData);
@@ -78,8 +78,8 @@ public final class UserWebService
 	}
 
 	@GET
-	@Path("query")
-	public Response getUserByAnyName(@QueryParam("first-name") String firstName, @QueryParam("last-name") String lastName,
+	@Path("search")
+	public Response searchUsersByFirstNameOrLastNameOrUsername(@QueryParam("first-name") String firstName, @QueryParam("last-name") String lastName,
 			@QueryParam("username") String username) throws RepositoryException
 	{
 		List<UserData> userDataList = userService.searchUsersByFirstNameOrLastNameOrUsername(firstName, lastName, username);

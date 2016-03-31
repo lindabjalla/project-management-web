@@ -21,7 +21,7 @@ public final class TeamMapper
 
 	public TeamMapper()
 	{
-		mapperFactory.classMap(Team.class, TeamData.class).fieldBToA("id", "id").exclude("status").byDefault().register();
+		mapperFactory.classMap(Team.class, TeamData.class).fieldBToA("id", "id").byDefault().register();
 	}
 
 	public TeamData convertTeamToTeamData(final Team team)
@@ -33,13 +33,12 @@ public final class TeamMapper
 	public Team convertTeamDataToTeam(final TeamData teamData)
 	{
 		Team team = mapper.map(teamData, Team.class);
-		team.setStatus(teamData.getStatus().toString());
 		return team;
 	}
 
 	public TeamData updateTeamData(final Team team, final TeamData teamData)
 	{
-		teamData.setName(team.getName()).setStatus(TeamStatus.valueOf(team.getStatus()));
+		teamData.setName(team.getName()).setStatus(team.getStatus());
 		return teamData;
 	}
 

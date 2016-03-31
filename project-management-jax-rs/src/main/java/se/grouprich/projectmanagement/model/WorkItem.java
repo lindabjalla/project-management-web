@@ -1,24 +1,28 @@
 package se.grouprich.projectmanagement.model;
 
-import javax.persistence.Entity;
-
 import se.grouprich.projectmanagement.status.WorkItemStatus;
 
-@Entity
 public final class WorkItem extends AbstractEntity
 {
 	private String title;
 	private User user;
 	private String description;
-	private String status;
-	
-	protected WorkItem(){}
+	private WorkItemStatus status;
 
-	public WorkItem(Long id, String controlNumber, String title, String status)
+	protected WorkItem() {}
+
+	public WorkItem(Long id, String controlId, String title, User user, String description, WorkItemStatus status)
 	{
-		super(id, controlNumber);
+		super(id, controlId);
 		this.title = title;
+		this.user = user;
+		this.description = description;
 		this.status = status;
+	}
+
+	public String getTitle()
+	{
+		return title;
 	}
 
 	public User getUser()
@@ -26,19 +30,19 @@ public final class WorkItem extends AbstractEntity
 		return user;
 	}
 
-	public String getStatus()
+	public String getDescription()
+	{
+		return description;
+	}
+
+	public WorkItemStatus getStatus()
 	{
 		return status;
 	}
-	
-	public void setStatus(final String status)
-	{
-		this.status = status;
-	}
 
-	public void setDescription(String description)
+	public void setTitle(String title)
 	{
-		this.description = description;
+		this.title = title;
 	}
 
 	public WorkItem setUser(User user)
@@ -46,7 +50,17 @@ public final class WorkItem extends AbstractEntity
 		this.user = user;
 		return this;
 	}
-	
+
+	public void setDescription(String description)
+	{
+		this.description = description;
+	}
+
+	public void setStatus(final WorkItemStatus status)
+	{
+		this.status = status;
+	}
+
 	@Override
 	public boolean equals(final Object other)
 	{
@@ -54,14 +68,14 @@ public final class WorkItem extends AbstractEntity
 		{
 			return true;
 		}
-		
+
 		if (other instanceof WorkItem)
 		{
 			WorkItem otherWorkItem = (WorkItem) other;
-			return getControlId().equals(otherWorkItem.getControlId()) && title.equals(otherWorkItem.title) 
-																	   && user.equals(otherWorkItem.user) 
-													 				   && description.equals(otherWorkItem.description) 
-													 				   && status.equals(otherWorkItem.status);
+			return getControlId().equals(otherWorkItem.getControlId()) && title.equals(otherWorkItem.title)
+																	   && user.equals(otherWorkItem.user)
+																	   && description.equals(otherWorkItem.description)
+																	   && status.equals(otherWorkItem.status);
 		}
 		return false;
 	}

@@ -55,22 +55,22 @@ public class IssueWebService
 		return Response.ok(issue).build();
 	}
 	
-	@PUT //Lägg till en Issue till WorkItem
-	@Path("{id}")
-	public Response updateIssueByWorkItem(@PathParam("id") Long id, Issue issue) throws UserException, RepositoryException
-	{
-		IssueData issueData = issueService.findById(id);
-		
-		if(issueData == null)
-		{
-			Response.status(Status.NOT_FOUND);
-		}
-		
-		IssueData updateIssueData = issueMapper.updateIssueData(issue, issueData);
-		issueService.createOrUpdate(updateIssueData);
-		
-		return Response.noContent().build();
-	}
+//	@PUT //Lägg till en Issue till WorkItem
+//	@Path("{id}")
+//	public Response updateIssueByWorkItem(@PathParam("id") Long id, Issue issue) throws UserException, RepositoryException
+//	{
+//		IssueData issueData = issueService.findById(id);
+//
+//		if(issueData == null)
+//		{
+//			Response.status(Status.NOT_FOUND);
+//		}
+//
+//		IssueData updateIssueData = issueMapper.updateIssueData(issue, issueData);
+//		issueService.createOrUpdate(updateIssueData);
+//
+//		return Response.noContent().build();
+//	}
 	
 	@DELETE
 	@Path("{id}")
