@@ -22,7 +22,7 @@ public final class UserMapper
 
 	public UserMapper()
 	{
-		mapperFactory.classMap(User.class, UserData.class).fieldBToA("id", "id").exclude("status").byDefault().register();
+		mapperFactory.classMap(User.class, UserData.class).fieldBToA("id", "id").byDefault().register();
 	}
 
 	public UserData convertUserToUserData(final User user)
@@ -34,25 +34,16 @@ public final class UserMapper
 	public User convertUserDataToUser(final UserData userData)
 	{
 		User user = mapper.map(userData, User.class);
-
-		user.setStatus(userData.getStatus().toString());
-		if (userData.getTeam() != null)
-		{
-			user.setTeamId(userData.getTeam().getId());
-		}
 		return user;
 	}
 
 	public UserData updateUserData(final User user, final UserData userData) throws RepositoryException
 	{
-		userData.setUsername(user.getUsername()).setPassword(user.getPassword()).setStatus(UserStatus.valueOf(user.getStatus()));
-		if (user.getTeamId() != null)
+		userData.setUsername(user.getUsername()).setPassword(user.getPassword()).setStatus(user.getStatus());
+		if (user.getTeam() != null)
 		{
-			TeamData teamData = teamService.findById(user.getTeamId());
-			if (teamData != null)
-			{
-				userData.setTeam(teamData);
-			}
+			TeamData teamData = teamService.findById(user.getTeam().getId());
+			userData.setTeam(teamData);
 		}
 
 		return userData;

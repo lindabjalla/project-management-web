@@ -1,18 +1,20 @@
 package se.grouprich.projectmanagement.model;
 
+import se.grouprich.projectmanagement.status.UserStatus;
+
 public final class User extends AbstractEntity
 {
 	private String username;
 	private String password;
 	private String firstName;
 	private String lastName;
-	private String status;
-	private Long teamId;
+	private UserStatus status;
+	private Team team;
 
 	public User() {}
 
-	public User(final Long id, String controlId, final String username, final String password, final String firstName, final String lastName, String status,
-			Long teamId)
+	public User(final Long id, String controlId, final String username, final String password, final String firstName,
+			final String lastName, UserStatus status, Team team)
 	{
 		super(id, controlId);
 		this.username = username;
@@ -20,7 +22,7 @@ public final class User extends AbstractEntity
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.status = status;
-		this.teamId = teamId;
+		this.team = team;
 	}
 
 	public String getUsername()
@@ -43,14 +45,14 @@ public final class User extends AbstractEntity
 		return lastName;
 	}
 
-	public String getStatus()
+	public UserStatus getStatus()
 	{
 		return status;
 	}
 
-	public Long getTeamId()
+	public Team getTeam()
 	{
-		return teamId;
+		return team;
 	}
 
 	public User setUsername(final String username)
@@ -77,15 +79,15 @@ public final class User extends AbstractEntity
 		return this;
 	}
 
-	public User setStatus(final String status)
+	public User setStatus(final UserStatus status)
 	{
 		this.status = status;
 		return this;
 	}
 
-	public void setTeamId(Long teamId)
+	public void setTeam(Team team)
 	{
-		this.teamId = teamId;
+		this.team = team;
 	}
 
 	@Override
@@ -125,6 +127,6 @@ public final class User extends AbstractEntity
 	public String toString()
 	{
 		return "User [id=" + getId() + ", userNumber=" + getControlId() + ", username=" + username + ", password=" + password + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", status=" + status + ", teamId=" + teamId + "]";
+				+ firstName + ", lastName=" + lastName + ", status=" + status + ", team=" + team + "]";
 	}
 }

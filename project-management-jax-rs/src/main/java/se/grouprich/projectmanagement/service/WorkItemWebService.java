@@ -55,15 +55,15 @@ public final class WorkItemWebService
 
 	@PUT
 	@Path("{id}/status/{status}")
-	public Response changeWorkItemStatus(@PathParam("id") Long id, @PathParam("status") String status) throws RepositoryException, UserException
+	public Response changeWorkItemStatus(@PathParam("id") Long id, @PathParam("status") WorkItemStatus status) throws RepositoryException, UserException
 	{
 		WorkItemData workItemData = workItemService.findById(id);
 
-		if (!EnumUtils.isValidEnum(WorkItemStatus.class, status.toUpperCase()))
+		if (!EnumUtils.isValidEnum(WorkItemStatus.class, status.toString()))
 		{
-			throw new InvalidStatusException(status);
+			throw new InvalidStatusException(status.toString());
 		}
-		workItemService.changeWorkItemStatus(workItemData, WorkItemStatus.valueOf(status.toUpperCase()));
+		workItemService.changeWorkItemStatus(workItemData, status);
 
 		return Response.noContent().build();
 	}
@@ -92,16 +92,13 @@ public final class WorkItemWebService
 
 	@GET
 	@Path("status/{status}")
-	public Response getWorkItemsByStatus(@PathParam("status") String status) throws RepositoryException
+	public Response getWorkItemsByStatus(@PathParam("status") WorkItemStatus status) throws RepositoryException
 	{
-		String upperCaseStatus = status.toUpperCase();
-
-		if (!EnumUtils.isValidEnum(WorkItemStatus.class, upperCaseStatus))
+		if (!EnumUtils.isValidEnum(WorkItemStatus.class, status.toString()))
 		{
-			throw new InvalidStatusException(status);
+			throw new InvalidStatusException(status.toString());
 		}
-
-		List<WorkItemData> workItemDataList = workItemService.fetchWorkItemsByStatus(WorkItemStatus.valueOf(upperCaseStatus));
+		List<WorkItemData> workItemDataList = workItemService.fetchWorkItemsByStatus(status);
 		List<WorkItem> workItems = workItemMapper.convertList(workItemDataList);
 
 		return Response.ok(workItems).build();

@@ -1,15 +1,17 @@
 package se.grouprich.projectmanagement.model;
 
+import se.grouprich.projectmanagement.status.WorkItemStatus;
+
 public final class WorkItem extends AbstractEntity
 {
 	private String title;
 	private User user;
 	private String description;
-	private String status;
+	private WorkItemStatus status;
 
 	protected WorkItem() {}
 
-	public WorkItem(Long id, String controlId, String title, User user, String description, String status)
+	public WorkItem(Long id, String controlId, String title, User user, String description, WorkItemStatus status)
 	{
 		super(id, controlId);
 		this.title = title;
@@ -33,7 +35,7 @@ public final class WorkItem extends AbstractEntity
 		return description;
 	}
 
-	public String getStatus()
+	public WorkItemStatus getStatus()
 	{
 		return status;
 	}
@@ -54,7 +56,7 @@ public final class WorkItem extends AbstractEntity
 		this.description = description;
 	}
 
-	public void setStatus(final String status)
+	public void setStatus(final WorkItemStatus status)
 	{
 		this.status = status;
 	}
