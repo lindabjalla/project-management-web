@@ -1,10 +1,5 @@
 package se.grouprich.projectmanagement.model;
 
-import javax.persistence.Entity;
-
-import se.grouprich.projectmanagement.status.WorkItemStatus;
-
-@Entity
 public final class WorkItem extends AbstractEntity
 {
 	private String title;
@@ -14,11 +9,18 @@ public final class WorkItem extends AbstractEntity
 
 	protected WorkItem() {}
 
-	public WorkItem(Long id, String controlId, String title, String status)
+	public WorkItem(Long id, String controlId, String title, User user, String description, String status)
 	{
 		super(id, controlId);
 		this.title = title;
+		this.user = user;
+		this.description = description;
 		this.status = status;
+	}
+
+	public String getTitle()
+	{
+		return title;
 	}
 
 	public User getUser()
@@ -26,14 +28,25 @@ public final class WorkItem extends AbstractEntity
 		return user;
 	}
 
+	public String getDescription()
+	{
+		return description;
+	}
+
 	public String getStatus()
 	{
 		return status;
 	}
 
-	public void setStatus(final String status)
+	public void setTitle(String title)
 	{
-		this.status = status;
+		this.title = title;
+	}
+
+	public WorkItem setUser(User user)
+	{
+		this.user = user;
+		return this;
 	}
 
 	public void setDescription(String description)
@@ -41,10 +54,9 @@ public final class WorkItem extends AbstractEntity
 		this.description = description;
 	}
 
-	public WorkItem setUser(User user)
+	public void setStatus(final String status)
 	{
-		this.user = user;
-		return this;
+		this.status = status;
 	}
 
 	@Override

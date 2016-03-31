@@ -7,9 +7,9 @@ public class Issue extends AbstractEntity
 
 	protected Issue(){}
 
-	public Issue(Long id, String controlNumber, String description)
+	public Issue(Long id, String controlId, String description)
 	{
-		super(id, controlNumber);
+		super(id, controlId);
 		this.description = description;
 	}
 
@@ -62,6 +62,6 @@ public class Issue extends AbstractEntity
 	@Override
 	public String toString()
 	{
-		return "Issue [id=" + getId() + ", controlNumber=" + getControlId() + ", description=" + description + ", workItem=" + workItem + "]";
+		return "Issue [id=" + getId() + ", controlId=" + getControlId() + ", description=" + description + ", workItem=" + workItem + "]";
 	}
 }

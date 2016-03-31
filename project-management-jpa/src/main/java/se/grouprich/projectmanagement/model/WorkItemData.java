@@ -27,16 +27,27 @@ public class WorkItemData extends AbstractEntityData
 
 	protected WorkItemData(){}
 
-	public WorkItemData(final String title)
+	public WorkItemData(final String title, final String description)
 	{
 		super();
 		this.title = title;
+		this.description = description;
 		status = WorkItemStatus.UNSTARTED;
+	}
+
+	public String getTitle()
+	{
+		return title;
 	}
 
 	public UserData getUser()
 	{
 		return user;
+	}
+
+	public String getDescription()
+	{
+		return description;
 	}
 
 	public WorkItemStatus getStatus()
@@ -49,9 +60,9 @@ public class WorkItemData extends AbstractEntityData
 		this.title = title;
 	}
 
-	public WorkItemData setStatus(final WorkItemStatus status)
+	public WorkItemData setUser(final UserData user)
 	{
-		this.status = status;
+		this.user = user;
 		return this;
 	}
 
@@ -61,9 +72,9 @@ public class WorkItemData extends AbstractEntityData
 		return this;
 	}
 
-	public WorkItemData setUser(final UserData user)
+	public WorkItemData setStatus(final WorkItemStatus status)
 	{
-		this.user = user;
+		this.status = status;
 		return this;
 	}
 

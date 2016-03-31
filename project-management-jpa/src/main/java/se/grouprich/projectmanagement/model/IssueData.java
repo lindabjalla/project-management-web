@@ -13,7 +13,7 @@ public class IssueData extends AbstractEntityData
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private WorkItemData workItemData;
+	private WorkItemData workItem;
 
 	protected IssueData(){}
 
@@ -29,7 +29,7 @@ public class IssueData extends AbstractEntityData
 
 	public WorkItemData getWorkItem()
 	{
-		return workItemData;
+		return workItem;
 	}
 
 	public IssueData setDescription(String description)
@@ -38,9 +38,9 @@ public class IssueData extends AbstractEntityData
 		return this;
 	}
 
-	public IssueData setWorkItem(WorkItemData workItemData)
+	public IssueData setWorkItem(WorkItemData workItem)
 	{
-		this.workItemData = workItemData;
+		this.workItem = workItem;
 		return this;
 	}
 
@@ -73,6 +73,6 @@ public class IssueData extends AbstractEntityData
 	@Override
 	public String toString()
 	{
-		return "Issue [id=" + getId() + ", controlNumber=" + getControlId() + ", description=" + description + ", workItem=" + workItemData +"]";
+		return "Issue [id=" + getId() + ", controlId=" + getControlId() + ", description=" + description + ", workItem=" + workItem +"]";
 	}
 }

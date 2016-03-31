@@ -3,11 +3,13 @@ package se.grouprich.projectmanagement.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import se.grouprich.projectmanagement.exception.RepositoryException;
 import se.grouprich.projectmanagement.exception.UserException;
 import se.grouprich.projectmanagement.exception.WorkItemException;
 import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.model.UserData;
 import se.grouprich.projectmanagement.model.WorkItemData;
+import se.grouprich.projectmanagement.repository.IssueRepository;
 import se.grouprich.projectmanagement.repository.UserRepository;
 import se.grouprich.projectmanagement.repository.WorkItemRepository;
 import se.grouprich.projectmanagement.status.UserStatus;
@@ -18,14 +20,13 @@ import java.util.List;
 @Service
 public class WorkItemService extends AbstractService<WorkItemData, WorkItemRepository>
 {
-//	private IssueRepository issueRepository;
+	private IssueRepository issueRepository;
 	private UserRepository userRepository;
 
-	@Autowired
-	WorkItemService(final WorkItemRepository workItemRepository, /*final IssueRepository issueRepository, */final UserRepository userRepository)
+	@Autowired WorkItemService(final WorkItemRepository workItemRepository, final IssueRepository issueRepository, final UserRepository userRepository)
 	{
 		super(workItemRepository, WorkItemData.class);
-//		this.issueRepository = issueRepository;
+		this.issueRepository = issueRepository;
 		this.userRepository = userRepository;
 	}
 
@@ -43,7 +44,7 @@ public class WorkItemService extends AbstractService<WorkItemData, WorkItemRepos
 	@Transactional
 	public WorkItemData removeWorkItem(final WorkItemData workItem)
 	{
-//		issueRepository.removeByWorkItem(workItem);
+		issueRepository.removeByWorkItem(workItem);
 		return superRepository.removeById(workItem.getId()).get(0);
 	}
 
@@ -66,23 +67,43 @@ public class WorkItemService extends AbstractService<WorkItemData, WorkItemRepos
 		return createOrUpdate(assignedWorkItem);
 	}
 
-	public List<WorkItemData> fetchWorkItemsByStatus(final WorkItemStatus status)
+	public List<WorkItemData> fetchWorkItemsByStatus(final WorkItemStatus status) throws RepositoryException
 	{
-		return superRepository.findByStatus(status);
+		List<WorkItemData> workItemDataList = superRepository.findByStatus(status);
+		if (workItemDataList.isEmpty())
+		{
+			throw new RepositoryException("WorkItem with WorkItemStatus: " + status + " was not found");
+		}
+		return workItemDataList;
 	}
 
-	public List<WorkItemData> fetchWorkItemsForTeam(final TeamData team)
+	public List<WorkItemData> fetchWorkItemsForTeam(final TeamData team) throws RepositoryException
 	{
-		return superRepository.findByTeam(team);
+		List<WorkItemData> workItemDataList = superRepository.findByTeam(team);
+		if (workItemDataList.isEmpty())
+		{
+			throw new RepositoryException("WorkItem for Team: " + team + " was not found");
+		}
+		return workItemDataList;
 	}
 
-	public List<WorkItemData> fetchWorkItemsForUser(final UserData user)
+	public List<WorkItemData> fetchWorkItemsForUser(final UserData user) throws RepositoryException
 	{
+		List<WorkItemData> workItemDataList = superRepository.findByUser(user);
+		if (workItemDataList.isEmpty())
+		{
+			throw new RepositoryException("WorkItem for User: " + user + " was not found");
+		}
 		return superRepository.findByUser(user);
 	}
 
-	public List<WorkItemData> searchWorkItemsByDescriptionContaining(final String keyword)
+	public List<WorkItemData> searchWorkItemsByDescriptionContaining(final String keyword) throws RepositoryException
 	{
-		return superRepository.findByDescriptionContaining(keyword);
+		List<WorkItemData> workItemDataList = superRepository.findByDescriptionContaining(keyword);
+		if (workItemDataList.isEmpty())
+		{
+			throw new RepositoryException("WorkItem with keyword: " + keyword + " was not found");
+		}
+		return workItemDataList;
 	}
 }

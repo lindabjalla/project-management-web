@@ -8,7 +8,7 @@ import se.grouprich.projectmanagement.model.Issue;
 import se.grouprich.projectmanagement.model.IssueData;
 import se.grouprich.projectmanagement.service.IssueService;
 
-public class IssueMapper 
+public final class IssueMapper
 {
 	private final MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
 	private final MapperFacade mapperFacade = mapperFactory.getMapperFacade();
