@@ -102,9 +102,11 @@ public class IssueWebService
 		return Response.noContent().build();
 	}
 	
-//	@GET
-//	public Response getAllWorkItemInIssue()
-//	{
-//		
-//	}
+	@GET
+	@Path("{}")
+	public Response getAllWorkItemWithIssue()
+	{
+		
+		return Response.noContent().build();
+	}
 }

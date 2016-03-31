@@ -73,6 +73,6 @@ public class IssueData extends AbstractEntityData
 	@Override
 	public String toString()
 	{
-		return "Issue [id=" + getId() + ", controlNumber=" + getControlId() + ", description=" + description + ", workItem=" + workItemData +"]";
+		return "Issue [id=" + getId() + ", controlId=" + getControlId() + ", description=" + description + ", workItem=" + workItemData +"]";
 	}
 }
