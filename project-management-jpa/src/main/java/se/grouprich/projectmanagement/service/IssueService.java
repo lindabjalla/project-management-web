@@ -16,13 +16,10 @@ import se.grouprich.projectmanagement.status.WorkItemStatus;
 @Service
 public class IssueService extends AbstractService<IssueData, IssueRepository>
 {
-	private IssueRepository issueRepository;
-	
 	@Autowired
 	IssueService(final IssueRepository issueRepository)
 	{
 		super(issueRepository, IssueData.class);
-		this.issueRepository = issueRepository;
 	}
 
 	@Transactional

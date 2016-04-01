@@ -31,11 +31,10 @@ public class UserData extends AbstractEntityData
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private TeamData team;
 
-	protected UserData(){}
+	protected UserData() {}
 
 	public UserData(final String username, final String password, final String firstName, final String lastName)
 	{
-		super();
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
@@ -93,10 +92,10 @@ public class UserData extends AbstractEntityData
 
 	public UserData setTeam(final TeamData team)
 	{
-		if (this.team == null || !this.team.equals(team))
+		if ((this.team == null && team != null) || (!this.team.equals(team) && team != null))
 		{
 			this.team = team;
-			team.addUser(this);
+			this.team.addUser(this);
 		}
 		return this;
 	}
@@ -112,10 +111,8 @@ public class UserData extends AbstractEntityData
 		{
 			UserData otherUser = (UserData) other;
 			return getControlId().equals(otherUser.getControlId()) && username.equals(otherUser.username)
-														   				   && password.equals(otherUser.password)
-														   				   && firstName.equals(otherUser.firstName)
-														   				   && lastName.equals(otherUser.lastName)
-														   				   && status.equals(otherUser.status);
+					&& password.equals(otherUser.password) && firstName.equals(otherUser.firstName)
+					&& lastName.equals(otherUser.lastName) && status.equals(otherUser.status);
 		}
 		return false;
 	}

@@ -17,7 +17,7 @@ public class IssueData extends AbstractEntityData
 
 	protected IssueData(){}
 
-	public IssueData(String description)
+	public IssueData(final String description)
 	{
 		this.description = description;
 	}

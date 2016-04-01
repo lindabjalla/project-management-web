@@ -1,16 +1,15 @@
 package se.grouprich.projectmanagement.model;
 
-public abstract class AbstractEntity
+abstract class AbstractEntity
 {
 	private Long id;
 	private String controlId;
 
-	public AbstractEntity(){}
+	AbstractEntity(){}
 
-	public AbstractEntity(Long id, String controlId)
+	AbstractEntity(Long id)
 	{
 		this.id = id;
-		this.controlId = controlId;
 	}
 	
 	public Long getId()

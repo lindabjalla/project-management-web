@@ -21,7 +21,8 @@ public class UserService extends AbstractService<UserData, UserRepository>
 {
 	private WorkItemRepository workItemRepository;
 
-	@Autowired UserService(final UserRepository userRepository, WorkItemRepository workItemRepository)
+	@Autowired
+	UserService(final UserRepository userRepository, WorkItemRepository workItemRepository)
 	{
 		super(userRepository, UserData.class);
 		this.workItemRepository = workItemRepository;

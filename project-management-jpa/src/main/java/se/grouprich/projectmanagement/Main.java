@@ -26,8 +26,8 @@ public final class Main
 //			UserData userData = new UserData("LambiLambiLambi", "iU23€%", "Lam", "Bi");
 //			userService.createOrUpdate(userData);
 
-			TeamData team = new TeamData("Team2");
-			TeamData createdTeam = teamService.createOrUpdate(team);
+//			TeamData team = new TeamData("Team2");
+//			TeamData createdTeam = teamService.createOrUpdate(team);
 
 			TeamData foundTeam = teamService.findById(3L);
 			System.out.println(foundTeam);

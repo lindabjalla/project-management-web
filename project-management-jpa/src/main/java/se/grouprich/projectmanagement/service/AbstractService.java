@@ -16,7 +16,7 @@ public abstract class AbstractService<E extends AbstractEntityData, R extends Cr
 	protected final R superRepository;
 	private final Class<E> classType;
 
-	AbstractService(final R superRepository, Class<E> classType)
+	protected AbstractService(final R superRepository, Class<E> classType)
 	{
 		this.superRepository = superRepository;
 		this.classType = classType;

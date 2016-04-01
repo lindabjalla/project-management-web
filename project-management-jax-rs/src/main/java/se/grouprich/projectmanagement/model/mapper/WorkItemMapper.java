@@ -19,19 +19,17 @@ public final class WorkItemMapper
 
 	public WorkItemMapper()
 	{
-		mapperFactory.classMap(WorkItem.class, WorkItemData.class).fieldBToA("id", "id").byDefault().register();
+		mapperFactory.classMap(WorkItem.class, WorkItemData.class).exclude("id").byDefault().register();
 	}
 
 	public WorkItemData convertWorkItemToWorkItemData(final WorkItem workItem)
 	{
-		WorkItemData workItemData = mapper.map(workItem, WorkItemData.class);
-		return workItemData;
+		return mapper.map(workItem, WorkItemData.class);
 	}
 
 	public WorkItem convertWorkItemDataToWorkItem(final WorkItemData workItemData)
 	{
-		WorkItem workItem = mapper.map(workItemData, WorkItem.class);
-		return workItem;
+		return mapper.map(workItemData, WorkItem.class);
 	}
 
 	public List<WorkItem> convertList(final List<WorkItemData> workItemDataList)

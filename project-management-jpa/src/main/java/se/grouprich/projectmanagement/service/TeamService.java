@@ -17,7 +17,8 @@ public class TeamService extends AbstractService<TeamData, TeamRepository>
 {
 	private UserRepository userRepository;
 
-	@Autowired TeamService(final TeamRepository teamRepository, final UserRepository userRepository)
+	@Autowired
+	TeamService(final TeamRepository teamRepository, final UserRepository userRepository)
 	{
 		super(teamRepository, TeamData.class);
 		this.userRepository = userRepository;

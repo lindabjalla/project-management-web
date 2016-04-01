@@ -23,7 +23,8 @@ public class WorkItemService extends AbstractService<WorkItemData, WorkItemRepos
 	private IssueRepository issueRepository;
 	private UserRepository userRepository;
 
-	@Autowired WorkItemService(final WorkItemRepository workItemRepository, final IssueRepository issueRepository, final UserRepository userRepository)
+	@Autowired
+	WorkItemService(final WorkItemRepository workItemRepository, final IssueRepository issueRepository, final UserRepository userRepository)
 	{
 		super(workItemRepository, WorkItemData.class);
 		this.issueRepository = issueRepository;

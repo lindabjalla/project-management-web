@@ -16,7 +16,7 @@ public final class User extends AbstractEntity
 	public User(final Long id, String controlId, final String username, final String password, final String firstName,
 			final String lastName, UserStatus status, Team team)
 	{
-		super(id, controlId);
+		super(id);
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;

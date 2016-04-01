@@ -21,19 +21,17 @@ public final class TeamMapper
 
 	public TeamMapper()
 	{
-		mapperFactory.classMap(Team.class, TeamData.class).fieldBToA("id", "id").byDefault().register();
+		mapperFactory.classMap(Team.class, TeamData.class).exclude("id").byDefault().register();
 	}
 
 	public TeamData convertTeamToTeamData(final Team team)
 	{
-		TeamData teamData = mapper.map(team, TeamData.class);
-		return teamData;
+		return mapper.map(team, TeamData.class);
 	}
 
 	public Team convertTeamDataToTeam(final TeamData teamData)
 	{
-		Team team = mapper.map(teamData, Team.class);
-		return team;
+		return mapper.map(teamData, Team.class);
 	}
 
 	public TeamData updateTeamData(final Team team, final TeamData teamData)

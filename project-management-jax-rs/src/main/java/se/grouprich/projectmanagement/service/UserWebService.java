@@ -30,7 +30,7 @@ public final class UserWebService
 	private UriInfo uriInfo;
 
 	@POST
-	public Response createUser(User user) throws UserException
+	public Response createUser(User user) throws UserException, RepositoryException
 	{
 		UserData createdUser = userService.createOrUpdate(userMapper.convertUserToUserData(user));
 		URI location = uriInfo.getAbsolutePathBuilder().path(getClass(), "getUser").build(createdUser.getId());
