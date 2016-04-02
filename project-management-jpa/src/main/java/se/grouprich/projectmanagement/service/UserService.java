@@ -3,8 +3,8 @@ package se.grouprich.projectmanagement.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import se.grouprich.projectmanagement.exception.InvalidValueException;
 import se.grouprich.projectmanagement.exception.RepositoryException;
-import se.grouprich.projectmanagement.exception.UserException;
 import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.model.UserData;
 import se.grouprich.projectmanagement.model.WorkItemData;
@@ -13,7 +13,6 @@ import se.grouprich.projectmanagement.repository.WorkItemRepository;
 import se.grouprich.projectmanagement.status.UserStatus;
 import se.grouprich.projectmanagement.status.WorkItemStatus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,11 +28,11 @@ public class UserService extends AbstractService<UserData, UserRepository>
 	}
 
 	@Override
-	public UserData createOrUpdate(final UserData user) throws UserException
+	public UserData createOrUpdate(final UserData user) throws InvalidValueException
 	{
 		if (user.getUsername() == null || user.getUsername().trim().length() < 10)
 		{
-			throw new UserException("Username must be longer than or equal to 10 characters");
+			throw new InvalidValueException("Username must be longer than or equal to 10 characters");
 		}
 		return super.createOrUpdate(user);
 	}
@@ -70,7 +69,7 @@ public class UserService extends AbstractService<UserData, UserRepository>
 	}
 
 	@Transactional
-	public UserData inactivateUser(final UserData user) throws UserException
+	public UserData inactivateUser(final UserData user) throws InvalidValueException
 	{
 		user.setStatus(UserStatus.INACTIVE);
 
