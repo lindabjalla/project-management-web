@@ -1,8 +1,8 @@
 package se.grouprich.projectmanagement.service;
 
 import se.grouprich.projectmanagement.Loader;
+import se.grouprich.projectmanagement.exception.InvalidValueException;
 import se.grouprich.projectmanagement.exception.RepositoryException;
-import se.grouprich.projectmanagement.exception.UserException;
 import se.grouprich.projectmanagement.model.Issue;
 import se.grouprich.projectmanagement.model.IssueData;
 import se.grouprich.projectmanagement.model.mapper.IssueMapper;
@@ -27,7 +27,7 @@ public class IssueWebService
 	private UriInfo uriInfo;
 
 	@POST
-	public Response createIssue(Issue issue) throws UserException
+	public Response createIssue(Issue issue) throws InvalidValueException
 	{
 		IssueData createdIssue = issueService.createOrUpdate(issueMapper.convertIssueToIssueData(issue));
 		URI location = uriInfo.getAbsolutePathBuilder().path(getClass(), "getIssue").build(createdIssue.getId());
@@ -78,7 +78,7 @@ public class IssueWebService
 
 	@PUT
 	@Path("{id}")
-	public Response updateIssue(@PathParam("id") Long id, Issue issue) throws UserException, RepositoryException
+	public Response updateIssue(@PathParam("id") Long id, Issue issue) throws InvalidValueException, RepositoryException
 	{
 		IssueData issueData = issueService.findById(id);
 

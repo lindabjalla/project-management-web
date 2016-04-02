@@ -7,10 +7,10 @@ import se.grouprich.projectmanagement.Loader;
 import se.grouprich.projectmanagement.model.Team;
 import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.service.TeamService;
-import se.grouprich.projectmanagement.status.TeamStatus;
 
 import javax.ws.rs.core.GenericEntity;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public final class TeamMapper
@@ -40,10 +40,11 @@ public final class TeamMapper
 		return teamData;
 	}
 
-	public List<Team> convertList(List<TeamData> teamDataList)
+	public GenericEntity<Collection<Team>> convertList(List<TeamData> teamDataList)
 	{
 		List<Team> teams = new ArrayList<>();
 		teamDataList.forEach(teamData -> teams.add(convertTeamDataToTeam(teamData)));
-		return teams;
+
+		return new GenericEntity<Collection<Team>>(teams){};
 	}
 }

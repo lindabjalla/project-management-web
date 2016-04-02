@@ -3,9 +3,8 @@ package se.grouprich.projectmanagement.service;
 import org.apache.commons.lang3.EnumUtils;
 import se.grouprich.projectmanagement.Loader;
 import se.grouprich.projectmanagement.exception.InvalidStatusException;
+import se.grouprich.projectmanagement.exception.InvalidValueException;
 import se.grouprich.projectmanagement.exception.RepositoryException;
-import se.grouprich.projectmanagement.exception.UserException;
-import se.grouprich.projectmanagement.exception.WorkItemException;
 import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.model.UserData;
 import se.grouprich.projectmanagement.model.WorkItem;
@@ -14,11 +13,9 @@ import se.grouprich.projectmanagement.model.mapper.WorkItemMapper;
 import se.grouprich.projectmanagement.status.WorkItemStatus;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import java.net.URI;
+import java.util.Collection;
 import java.util.List;
 
 @Path("/work-item")
@@ -35,7 +32,7 @@ public final class WorkItemWebService
 	private UriInfo uriInfo;
 
 	@POST
-	public Response createWorkItem(WorkItem workItem) throws UserException
+	public Response createWorkItem(WorkItem workItem) throws InvalidValueException
 	{
 		WorkItemData createdWorkItem = workItemService.createOrUpdate(workItemMapper.convertWorkItemToWorkItemData(workItem));
 		URI location = uriInfo.getAbsolutePathBuilder().path(getClass(), "getWorkItem").build(createdWorkItem.getId());
@@ -55,7 +52,7 @@ public final class WorkItemWebService
 
 	@PUT
 	@Path("{id}/status/{status}")
-	public Response changeWorkItemStatus(@PathParam("id") Long id, @PathParam("status") WorkItemStatus status) throws RepositoryException, UserException
+	public Response changeWorkItemStatus(@PathParam("id") Long id, @PathParam("status") WorkItemStatus status) throws RepositoryException, InvalidValueException
 	{
 		WorkItemData workItemData = workItemService.findById(id);
 
@@ -81,7 +78,7 @@ public final class WorkItemWebService
 	@PUT
 	@Path("{workItemId}/user/{userId}")
 	public Response assignWorkItemToUser(@PathParam("workItemId") Long workItemId, @PathParam("userId") Long userId)
-			throws RepositoryException, WorkItemException, UserException
+			throws RepositoryException, InvalidValueException
 	{
 		UserData userData = userService.findById(userId);
 		WorkItemData workItemData = workItemService.findById(workItemId);
@@ -99,7 +96,7 @@ public final class WorkItemWebService
 			throw new InvalidStatusException(status.toString());
 		}
 		List<WorkItemData> workItemDataList = workItemService.fetchWorkItemsByStatus(status);
-		List<WorkItem> workItems = workItemMapper.convertList(workItemDataList);
+		GenericEntity<Collection<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
 
 		return Response.ok(workItems).build();
 	}
@@ -110,7 +107,7 @@ public final class WorkItemWebService
 	{
 		TeamData teamData = teamService.findById(teamId);
 		List<WorkItemData> workItemDataList = workItemService.fetchWorkItemsForTeam(teamData);
-		List<WorkItem> workItems = workItemMapper.convertList(workItemDataList);
+		GenericEntity<Collection<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
 
 		return Response.ok(workItems).build();
 	}
@@ -121,7 +118,7 @@ public final class WorkItemWebService
 	{
 		UserData userData = userService.findById(userId);
 		List<WorkItemData> workItemDataList = workItemService.fetchWorkItemsForUser(userData);
-		List<WorkItem> workItems = workItemMapper.convertList(workItemDataList);
+		GenericEntity<Collection<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
 
 		return Response.ok(workItems).build();
 	}
@@ -131,7 +128,7 @@ public final class WorkItemWebService
 	public Response searchWorkItemsByDescriptionContaining(@QueryParam("keyword") String keyword) throws RepositoryException
 	{
 		List<WorkItemData> workItemDataList = workItemService.searchWorkItemsByDescriptionContaining(keyword);
-		List<WorkItem> workItems = workItemMapper.convertList(workItemDataList);
+		GenericEntity<Collection<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
 
 		return Response.ok(workItems).build();
 	}

@@ -5,13 +5,13 @@ import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
 import se.grouprich.projectmanagement.Loader;
 import se.grouprich.projectmanagement.exception.RepositoryException;
-import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.model.User;
 import se.grouprich.projectmanagement.model.UserData;
 import se.grouprich.projectmanagement.service.TeamService;
-import se.grouprich.projectmanagement.status.UserStatus;
 
+import javax.ws.rs.core.GenericEntity;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public final class UserMapper
@@ -41,11 +41,12 @@ public final class UserMapper
 		return userData;
 	}
 
-	public List<User> convertList(List<UserData> userDataList)
+	public GenericEntity<Collection<User>> convertList(List<UserData> userDataList)
 	{
 		List<User> users = new ArrayList<>();
 		userDataList.forEach(userData -> users.add(convertUserDataToUser(userData)));
-		return users;
+
+		return new GenericEntity<Collection<User>>(users){};
 	}
 }
 

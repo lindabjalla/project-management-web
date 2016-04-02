@@ -8,7 +8,9 @@ import se.grouprich.projectmanagement.model.WorkItem;
 import se.grouprich.projectmanagement.model.WorkItemData;
 import se.grouprich.projectmanagement.service.WorkItemService;
 
+import javax.ws.rs.core.GenericEntity;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public final class WorkItemMapper
@@ -32,11 +34,11 @@ public final class WorkItemMapper
 		return mapper.map(workItemData, WorkItem.class);
 	}
 
-	public List<WorkItem> convertList(final List<WorkItemData> workItemDataList)
+	public GenericEntity<Collection<WorkItem>> convertList(final List<WorkItemData> workItemDataList)
 	{
 		List<WorkItem> workItems = new ArrayList<>();
 		workItemDataList.forEach(workItemData -> workItems.add(convertWorkItemDataToWorkItem(workItemData)));
 
-		return workItems;
+		return new GenericEntity<Collection<WorkItem>>(workItems){};
 	}
 }

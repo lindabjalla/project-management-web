@@ -2,19 +2,17 @@ package se.grouprich.projectmanagement.service;
 
 import com.google.common.collect.Lists;
 import se.grouprich.projectmanagement.Loader;
+import se.grouprich.projectmanagement.exception.InvalidValueException;
 import se.grouprich.projectmanagement.exception.RepositoryException;
-import se.grouprich.projectmanagement.exception.UserException;
 import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.model.User;
 import se.grouprich.projectmanagement.model.UserData;
 import se.grouprich.projectmanagement.model.mapper.UserMapper;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import java.net.URI;
+import java.util.Collection;
 import java.util.List;
 
 @Path("/user")
@@ -30,7 +28,7 @@ public final class UserWebService
 	private UriInfo uriInfo;
 
 	@POST
-	public Response createUser(User user) throws UserException, RepositoryException
+	public Response createUser(User user) throws InvalidValueException, RepositoryException
 	{
 		UserData createdUser = userService.createOrUpdate(userMapper.convertUserToUserData(user));
 		URI location = uriInfo.getAbsolutePathBuilder().path(getClass(), "getUser").build(createdUser.getId());
@@ -50,7 +48,7 @@ public final class UserWebService
 
 	@PUT
 	@Path("{id}")
-	public Response updateUser(@PathParam("id") Long id, User user) throws UserException, RepositoryException
+	public Response updateUser(@PathParam("id") Long id, User user) throws InvalidValueException, RepositoryException
 	{
 		UserData userData = userService.findById(id);
 		UserData updatedUserData = userMapper.updateUserData(user, userData);
@@ -83,7 +81,7 @@ public final class UserWebService
 			@QueryParam("username") String username) throws RepositoryException
 	{
 		List<UserData> userDataList = userService.searchUsersByFirstNameOrLastNameOrUsername(firstName, lastName, username);
-		List<User> users = userMapper.convertList(userDataList);
+		GenericEntity<Collection<User>> users = userMapper.convertList(userDataList);
 
 		return Response.ok(users).build();
 	}
@@ -93,7 +91,7 @@ public final class UserWebService
 	{
 		Iterable<UserData> userDataIterable = userService.findAll();
 		List<UserData> userDataList = Lists.newArrayList(userDataIterable);
-		List<User> users = userMapper.convertList(userDataList);
+		GenericEntity<Collection<User>> users = userMapper.convertList(userDataList);
 
 		return Response.ok(users).build();
 	}
@@ -104,7 +102,7 @@ public final class UserWebService
 	{
 		TeamData teamData = teamService.findById(teamId);
 		List<UserData> userDataList = userService.findByTeam(teamData);
-		List<User> users = userMapper.convertList(userDataList);
+		GenericEntity<Collection<User>> users = userMapper.convertList(userDataList);
 
 		return Response.ok(users).build();
 	}
