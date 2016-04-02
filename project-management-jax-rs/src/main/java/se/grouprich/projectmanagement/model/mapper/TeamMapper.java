@@ -40,7 +40,7 @@ public final class TeamMapper
 		return teamData;
 	}
 
-	public GenericEntity<Collection<Team>> convertList(List<TeamData> teamDataList)
+	public GenericEntity<Collection<Team>> convertList(final List<TeamData> teamDataList)
 	{
 		List<Team> teams = new ArrayList<>();
 		teamDataList.forEach(teamData -> teams.add(convertTeamDataToTeam(teamData)));

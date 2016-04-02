@@ -41,7 +41,7 @@ public final class UserMapper
 		return userData;
 	}
 
-	public GenericEntity<Collection<User>> convertList(List<UserData> userDataList)
+	public GenericEntity<Collection<User>> convertList(final List<UserData> userDataList)
 	{
 		List<User> users = new ArrayList<>();
 		userDataList.forEach(userData -> users.add(convertUserDataToUser(userData)));
