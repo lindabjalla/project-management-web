@@ -12,15 +12,20 @@ public abstract class AbstractService<E extends AbstractEntityData, R extends Cr
 	protected final R superRepository;
 	private final Class<E> classType;
 
-	protected AbstractService(final R superRepository, Class<E> classType)
+	protected AbstractService(final R superRepository, final Class<E> classType)
 	{
 		this.superRepository = superRepository;
 		this.classType = classType;
 	}
 
+	public E createOrUpdate(final E entity) throws InvalidValueException
+	{
+		return superRepository.save(entity);
+	}
+
 	public E findById(final Long id) throws RepositoryException
 	{
-		E entity = superRepository.findOne(id);
+		final E entity = superRepository.findOne(id);
 		if (entity == null)
 		{
 			throw new RepositoryException(classType.getSimpleName().replace("Data", "") + " with id: " + id + " was not found");
@@ -29,22 +34,17 @@ public abstract class AbstractService<E extends AbstractEntityData, R extends Cr
 		return entity;
 	}
 
-	public E createOrUpdate(final E entity) throws InvalidValueException
-	{
-		return superRepository.save(entity);
-	}
-
 	@Transactional
 	public E deleteById(final Long id) throws RepositoryException
 	{
-		E entity = findById(id);
+		final E entity = findById(id);
 		superRepository.delete(id);
 		return entity;
 	}
 
 	public Iterable<E> findAll() throws RepositoryException
 	{
-		Iterable<E> entities = superRepository.findAll();
+		final Iterable<E> entities = superRepository.findAll();
 		if (Iterables.isEmpty(entities))
 		{
 			throw new RepositoryException("No entity was found");
