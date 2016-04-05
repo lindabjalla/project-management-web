@@ -11,7 +11,8 @@ public final class WorkItem extends AbstractEntity
 
 	public WorkItem() {}
 
-	public WorkItem(Long id, String controlId, String title, User user, String description, WorkItemStatus status)
+	public WorkItem(final Long id, final String controlId, final String title, final User user, final String description,
+			final WorkItemStatus status)
 	{
 		super(id);
 		this.title = title;
@@ -40,18 +41,18 @@ public final class WorkItem extends AbstractEntity
 		return status;
 	}
 
-	public void setTitle(String title)
+	public void setTitle(final String title)
 	{
 		this.title = title;
 	}
 
-	public WorkItem setUser(User user)
+	public WorkItem setUser(final User user)
 	{
 		this.user = user;
 		return this;
 	}
 
-	public void setDescription(String description)
+	public void setDescription(final String description)
 	{
 		this.description = description;
 	}
@@ -73,9 +74,8 @@ public final class WorkItem extends AbstractEntity
 		{
 			WorkItem otherWorkItem = (WorkItem) other;
 			return getControlId().equals(otherWorkItem.getControlId()) && title.equals(otherWorkItem.title)
-																	   && user.equals(otherWorkItem.user)
-																	   && description.equals(otherWorkItem.description)
-																	   && status.equals(otherWorkItem.status);
+					&& user.equals(otherWorkItem.user) && description.equals(otherWorkItem.description)
+					&& status.equals(otherWorkItem.status);
 		}
 		return false;
 	}

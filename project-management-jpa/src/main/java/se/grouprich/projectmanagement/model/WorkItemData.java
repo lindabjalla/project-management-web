@@ -1,13 +1,8 @@
 package se.grouprich.projectmanagement.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-
 import se.grouprich.projectmanagement.status.WorkItemStatus;
+
+import javax.persistence.*;
 
 @Entity
 public class WorkItemData extends AbstractEntityData
@@ -25,7 +20,7 @@ public class WorkItemData extends AbstractEntityData
 	@Enumerated(EnumType.STRING)
 	private WorkItemStatus status;
 
-	protected WorkItemData(){}
+	protected WorkItemData() {}
 
 	public WorkItemData(final String title, final String description)
 	{
@@ -53,7 +48,7 @@ public class WorkItemData extends AbstractEntityData
 	{
 		return status;
 	}
-	
+
 	public void setTitle(final String title)
 	{
 		this.title = title;
@@ -108,6 +103,7 @@ public class WorkItemData extends AbstractEntityData
 	@Override
 	public String toString()
 	{
-		return "WorkItem [id=" + getId() + ", controlId=" + getControlId() + ", title=" + title + ", user=" + user + ", description=" + description + ", status=" + status + "]";
+		return "WorkItem [id=" + getId() + ", controlId=" + getControlId() + ", title=" + title + ", user=" + user + ", description="
+				+ description + ", status=" + status + "]";
 	}
 }

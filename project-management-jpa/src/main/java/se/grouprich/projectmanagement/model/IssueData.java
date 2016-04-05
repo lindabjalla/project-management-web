@@ -1,7 +1,7 @@
 package se.grouprich.projectmanagement.model;
 
-import javax.persistence.Entity;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -15,7 +15,7 @@ public class IssueData extends AbstractEntityData
 	@JoinColumn(nullable = false)
 	private WorkItemData workItem;
 
-	protected IssueData(){}
+	protected IssueData() {}
 
 	public IssueData(final String description)
 	{

@@ -1,13 +1,8 @@
 package se.grouprich.projectmanagement.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-
 import se.grouprich.projectmanagement.status.UserStatus;
+
+import javax.persistence.*;
 
 @Entity
 public class UserData extends AbstractEntityData
@@ -134,7 +129,7 @@ public class UserData extends AbstractEntityData
 	@Override
 	public String toString()
 	{
-		return "User [id=" + getId() + ", controlId=" + getControlId() + ", username=" + username + ", password=" + password + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", status=" + status + ", team=" + team + "]";
+		return "User [id=" + getId() + ", controlId=" + getControlId() + ", username=" + username + ", password=" + password +
+				", firstName=" + firstName + ", lastName=" + lastName + ", status=" + status + ", team=" + team + "]";
 	}
 }

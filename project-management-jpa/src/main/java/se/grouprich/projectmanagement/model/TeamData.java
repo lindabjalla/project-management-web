@@ -1,11 +1,10 @@
 package se.grouprich.projectmanagement.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import se.grouprich.projectmanagement.status.TeamStatus;
 
 import javax.persistence.*;
-
-import se.grouprich.projectmanagement.status.TeamStatus;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class TeamData extends AbstractEntityData
