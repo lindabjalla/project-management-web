@@ -20,8 +20,11 @@ import javax.ws.rs.core.UriInfo;
 import se.grouprich.projectmanagement.Loader;
 import se.grouprich.projectmanagement.exception.RepositoryException;
 import se.grouprich.projectmanagement.exception.UserException;
+import se.grouprich.projectmanagement.exception.WorkItemException;
 import se.grouprich.projectmanagement.model.Issue;
 import se.grouprich.projectmanagement.model.IssueData;
+import se.grouprich.projectmanagement.model.WorkItem;
+import se.grouprich.projectmanagement.model.WorkItemData;
 import se.grouprich.projectmanagement.model.mapper.IssueMapper;
 
 @Path("/issue")
@@ -30,6 +33,7 @@ import se.grouprich.projectmanagement.model.mapper.IssueMapper;
 public class IssueWebService
 {
 	private static final IssueService issueService = Loader.getBean(IssueService.class);
+	private static final WorkItemService workItemService = Loader.getBean(WorkItemService.class);
 	private static final IssueMapper issueMapper = new IssueMapper();
 	
 	@Context
@@ -49,7 +53,6 @@ public class IssueWebService
 	public Response getIssue(@PathParam("id") Long id) throws RepositoryException
 	{
 		IssueData issueData = issueService.findById(id);
-		
 		Issue issue = issueMapper.convertIssueDataToIssue(issueData);
 	
 		return Response.ok(issue).build();
@@ -103,10 +106,12 @@ public class IssueWebService
 	}
 	
 	@GET
-	@Path("{}")
-	public Response getAllWorkItemWithIssue()
+	@Path("{issueId}/work-item/{workItemId}")
+	public Response getAllWorkItemWithIssue(@PathParam("issueId") Long issueId, @PathParam("workItemId") Long workItemId) throws RepositoryException, WorkItemException, UserException
 	{
-		
+		IssueData issueData = issueService.findById(issueId);
+		WorkItemData workItemData = workItemService.findById(workItemId);
+		issueService.createAndAddToWorkItem(workItemData, issueData);
 		return Response.noContent().build();
 	}
 }
