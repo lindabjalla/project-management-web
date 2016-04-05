@@ -18,9 +18,15 @@ public class IssueService extends AbstractService<IssueData, IssueRepository>
 	{
 		super(issueRepository, IssueData.class);
 	}
+	
+	@Override
+	public IssueData createOrUpdate(final IssueData issueData) throws InvalidValueException 
+	{
+		return super.createOrUpdate(issueData);
+	}
 
 	@Transactional
-	public IssueData createAndAddToWorkItem(WorkItemData workItem, IssueData issue) throws InvalidValueException
+	public IssueData addIssueToWorkItem(final IssueData issue, final WorkItemData workItem) throws InvalidValueException
 	{
 		if (workItem == null)
 		{
@@ -37,13 +43,13 @@ public class IssueService extends AbstractService<IssueData, IssueRepository>
 		return createOrUpdate(issueAddedToWorkItem);
 	}
 
-	public IssueData updateIssue(IssueData issue) throws RepositoryException, InvalidValueException
-	{
-		if (issue.getId() == null)
-		{
-			throw new RepositoryException("Issue does not exist");
-		}
-		
-		return createOrUpdate(issue);
-	}
+//	public IssueData updateIssue(IssueData issue) throws RepositoryException, InvalidValueException
+//	{
+//		if (issue.getId() == null)
+//		{
+//			throw new RepositoryException("Issue does not exist");
+//		}
+//		
+//		return createOrUpdate(issue);
+//	}
 }

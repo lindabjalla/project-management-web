@@ -78,7 +78,7 @@ public class IssueWebService
 		IssueData issueData = issueService.findById(issueId);
 		WorkItemData workItemData = workItemService.findById(workItemId);
 		
-		issueService.createAndAddToWorkItem(workItemData, issueData);
+		issueService.addIssueToWorkItem(issueData, workItemData);		
 		
 		return Response.noContent().build();
 	}
