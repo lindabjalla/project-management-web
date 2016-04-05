@@ -65,7 +65,7 @@ public class IssueWebService
 
 	@DELETE
 	@Path("{id}")
-	public Response deleteIssue(@PathParam("id") Long id) throws RepositoryException
+	public Response deleteIssue(@PathParam("id") Long id) throws RepositoryException, InvalidValueException
 	{
 		if (issueService.findById(id) == null)
 		{

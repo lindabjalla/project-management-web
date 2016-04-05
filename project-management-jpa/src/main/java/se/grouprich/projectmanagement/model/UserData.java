@@ -92,6 +92,11 @@ public class UserData extends AbstractEntityData
 			this.team = team;
 			this.team.addUser(this);
 		}
+		else if (team == null)
+		{
+			this.team.getUsers().remove(this);
+			this.team = null;
+		}
 		return this;
 	}
 
