@@ -3,9 +3,8 @@ package se.grouprich.projectmanagement.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import se.grouprich.projectmanagement.exception.InvalidValueException;
 import se.grouprich.projectmanagement.exception.RepositoryException;
-import se.grouprich.projectmanagement.exception.UserException;
-import se.grouprich.projectmanagement.exception.WorkItemException;
 import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.model.UserData;
 import se.grouprich.projectmanagement.model.WorkItemData;
@@ -23,19 +22,20 @@ public class WorkItemService extends AbstractService<WorkItemData, WorkItemRepos
 	private IssueRepository issueRepository;
 	private UserRepository userRepository;
 
-	@Autowired WorkItemService(final WorkItemRepository workItemRepository, final IssueRepository issueRepository, final UserRepository userRepository)
+	@Autowired
+	WorkItemService(final WorkItemRepository workItemRepository, final IssueRepository issueRepository, final UserRepository userRepository)
 	{
 		super(workItemRepository, WorkItemData.class);
 		this.issueRepository = issueRepository;
 		this.userRepository = userRepository;
 	}
 
-	public WorkItemData createOrUpdate(final WorkItemData workItem) throws UserException
+	public WorkItemData createOrUpdate(final WorkItemData workItem) throws InvalidValueException
 	{
 		return super.createOrUpdate(workItem);
 	}
 
-	public WorkItemData changeWorkItemStatus(final WorkItemData workItem, final WorkItemStatus status) throws UserException
+	public WorkItemData changeWorkItemStatus(final WorkItemData workItem, final WorkItemStatus status) throws InvalidValueException
 	{
 		workItem.setStatus(status);
 		return createOrUpdate(workItem);
@@ -49,18 +49,18 @@ public class WorkItemService extends AbstractService<WorkItemData, WorkItemRepos
 	}
 
 	@Transactional
-	public WorkItemData assignWorkItemToUser(final UserData user, final WorkItemData workItem) throws WorkItemException, UserException
+	public WorkItemData assignWorkItemToUser(final UserData user, final WorkItemData workItem) throws InvalidValueException
 	{
 		final UserData savedUser = userRepository.save(user);
 		if (!UserStatus.ACTIVE.equals(savedUser.getStatus()))
 		{
-			throw new WorkItemException("A WorkItem can only be assigned to a User with UserStatus.ACTIVE");
+			throw new InvalidValueException("A WorkItem can only be assigned to a User with UserStatus.ACTIVE");
 		}
 
 		final List<WorkItemData> workItemsFoundByUser = superRepository.findByUser(savedUser);
 		if (workItemsFoundByUser.size() >= 5)
 		{
-			throw new WorkItemException("Maximum number of work items a User can have is 5");
+			throw new InvalidValueException("Maximum number of work items a User can have is 5");
 		}
 
 		final WorkItemData assignedWorkItem = workItem.setUser(savedUser);

@@ -14,9 +14,9 @@ public final class User extends AbstractEntity
 	public User() {}
 
 	public User(final Long id, String controlId, final String username, final String password, final String firstName,
-			final String lastName, UserStatus status, Team team)
+			final String lastName, final UserStatus status, final Team team)
 	{
-		super(id, controlId);
+		super(id);
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
@@ -67,13 +67,13 @@ public final class User extends AbstractEntity
 		return this;
 	}
 
-	public User setFirstName(String firstName)
+	public User setFirstName(final String firstName)
 	{
 		this.firstName = firstName;
 		return this;
 	}
 
-	public User setLastName(String lastName)
+	public User setLastName(final String lastName)
 	{
 		this.lastName = lastName;
 		return this;
@@ -85,7 +85,7 @@ public final class User extends AbstractEntity
 		return this;
 	}
 
-	public void setTeam(Team team)
+	public void setTeam(final Team team)
 	{
 		this.team = team;
 	}
@@ -101,10 +101,8 @@ public final class User extends AbstractEntity
 		{
 			User otherUser = (User) other;
 			return getControlId().equals(otherUser.getControlId()) && username.equals(otherUser.username)
-																		   && password.equals(otherUser.password)
-																		   && firstName.equals(otherUser.firstName)
-																		   && lastName.equals(otherUser.lastName)
-																		   && status.equals(otherUser.status);
+					&& password.equals(otherUser.password) && firstName.equals(otherUser.firstName)
+					&& lastName.equals(otherUser.lastName) && status.equals(otherUser.status);
 		}
 		return false;
 	}

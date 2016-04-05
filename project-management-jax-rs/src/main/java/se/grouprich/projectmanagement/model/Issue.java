@@ -5,11 +5,11 @@ public class Issue extends AbstractEntity
 	private String description;
 	private WorkItem workItem;
 
-	protected Issue(){}
+	public Issue(){}
 
 	public Issue(Long id, String controlId, String description)
 	{
-		super(id, controlId);
+		super(id);
 		this.description = description;
 	}
 

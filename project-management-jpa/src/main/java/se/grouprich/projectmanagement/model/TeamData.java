@@ -24,7 +24,6 @@ public class TeamData extends AbstractEntityData
 
 	public TeamData(final String name)
 	{
-		super();
 		this.name = name;
 		status = TeamStatus.ACTIVE;
 		users = new HashSet<>();

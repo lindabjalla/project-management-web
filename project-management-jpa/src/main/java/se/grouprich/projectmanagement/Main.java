@@ -3,17 +3,15 @@ package se.grouprich.projectmanagement;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import se.grouprich.projectmanagement.exception.RepositoryException;
-import se.grouprich.projectmanagement.exception.TeamException;
-import se.grouprich.projectmanagement.exception.UserException;
+import se.grouprich.projectmanagement.exception.InvalidValueException;
 import se.grouprich.projectmanagement.model.TeamData;
-import se.grouprich.projectmanagement.model.UserData;
 import se.grouprich.projectmanagement.service.TeamService;
 import se.grouprich.projectmanagement.service.UserService;
 import se.grouprich.projectmanagement.service.WorkItemService;
 
 public final class Main
 {
-	public static void main(String[] args) throws TeamException, RepositoryException, UserException
+	public static void main(String[] args) throws RepositoryException, InvalidValueException
 	{
 		try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext())
 		{
@@ -26,10 +24,10 @@ public final class Main
 //			UserData userData = new UserData("LambiLambiLambi", "iU23€%", "Lam", "Bi");
 //			userService.createOrUpdate(userData);
 
-			TeamData team = new TeamData("Team2");
-			TeamData createdTeam = teamService.createOrUpdate(team);
+//			TeamData team = new TeamData("Team2");
+//			TeamData createdTeam = teamService.createOrUpdate(team);
 
-			TeamData foundTeam = teamService.findById(3L);
+			TeamData foundTeam = teamService.findById(5L);
 			System.out.println(foundTeam);
 			System.out.println(foundTeam.getUsers());
 

@@ -29,7 +29,6 @@ public class WorkItemData extends AbstractEntityData
 
 	public WorkItemData(final String title, final String description)
 	{
-		super();
 		this.title = title;
 		this.description = description;
 		status = WorkItemStatus.UNSTARTED;

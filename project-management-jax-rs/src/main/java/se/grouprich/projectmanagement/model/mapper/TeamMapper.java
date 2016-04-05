@@ -7,33 +7,31 @@ import se.grouprich.projectmanagement.Loader;
 import se.grouprich.projectmanagement.model.Team;
 import se.grouprich.projectmanagement.model.TeamData;
 import se.grouprich.projectmanagement.service.TeamService;
-import se.grouprich.projectmanagement.status.TeamStatus;
 
 import javax.ws.rs.core.GenericEntity;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public final class TeamMapper
 {
 	private final MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
 	private final MapperFacade mapper = mapperFactory.getMapperFacade();
-	private static TeamService teamService = Loader.getBean(TeamService.class);
+	private final static TeamService teamService = Loader.getBean(TeamService.class);
 
 	public TeamMapper()
 	{
-		mapperFactory.classMap(Team.class, TeamData.class).fieldBToA("id", "id").byDefault().register();
+		mapperFactory.classMap(Team.class, TeamData.class).exclude("id").byDefault().register();
 	}
 
 	public TeamData convertTeamToTeamData(final Team team)
 	{
-		TeamData teamData = mapper.map(team, TeamData.class);
-		return teamData;
+		return mapper.map(team, TeamData.class);
 	}
 
 	public Team convertTeamDataToTeam(final TeamData teamData)
 	{
-		Team team = mapper.map(teamData, Team.class);
-		return team;
+		return mapper.map(teamData, Team.class);
 	}
 
 	public TeamData updateTeamData(final Team team, final TeamData teamData)
@@ -42,10 +40,11 @@ public final class TeamMapper
 		return teamData;
 	}
 
-	public List<Team> convertList(List<TeamData> teamDataList)
+	public GenericEntity<Collection<Team>> convertList(final List<TeamData> teamDataList)
 	{
 		List<Team> teams = new ArrayList<>();
 		teamDataList.forEach(teamData -> teams.add(convertTeamDataToTeam(teamData)));
-		return teams;
+
+		return new GenericEntity<Collection<Team>>(teams){};
 	}
 }

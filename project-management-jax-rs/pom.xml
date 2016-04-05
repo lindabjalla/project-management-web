@@ -92,15 +92,9 @@
 		</dependency>
 
 		<!-- JAX-B JSON support -->
-		<!--dependency>
-			<groupId>org.glassfish.jersey.media</groupId>
-			<artifactId>jersey-media-moxy</artifactId>
-		</dependency-->
-
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
-			<artifactId>jersey-media-json-jackson</artifactId>
-			<version>2.22.1</version>
+			<artifactId>jersey-media-moxy</artifactId>
 		</dependency>
 
 		<dependency>
