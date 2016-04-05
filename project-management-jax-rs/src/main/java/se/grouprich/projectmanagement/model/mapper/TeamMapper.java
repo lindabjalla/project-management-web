@@ -17,7 +17,7 @@ public final class TeamMapper
 {
 	private final MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
 	private final MapperFacade mapper = mapperFactory.getMapperFacade();
-	private static TeamService teamService = Loader.getBean(TeamService.class);
+	private final static TeamService teamService = Loader.getBean(TeamService.class);
 
 	public TeamMapper()
 	{

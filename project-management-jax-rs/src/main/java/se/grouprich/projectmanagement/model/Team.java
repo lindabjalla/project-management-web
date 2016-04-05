@@ -9,7 +9,7 @@ public final class Team extends AbstractEntity
 
 	public Team(){}
 
-	public Team(Long id, String controlId, String name, TeamStatus status)
+	public Team(final Long id, final String controlId, final String name, final TeamStatus status)
 	{
 		super(id);
 		this.name = name;
