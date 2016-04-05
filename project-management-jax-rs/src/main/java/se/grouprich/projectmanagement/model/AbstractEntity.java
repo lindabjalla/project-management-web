@@ -5,7 +5,7 @@ abstract class AbstractEntity
 	private Long id;
 	private String controlId;
 
-	AbstractEntity(){}
+	AbstractEntity() {}
 
 	AbstractEntity(Long id)
 	{
@@ -22,7 +22,7 @@ abstract class AbstractEntity
 		this.id = id;
 	}
 
-	public String getControlId()
+	String getControlId()
 	{
 		return controlId;
 	}
