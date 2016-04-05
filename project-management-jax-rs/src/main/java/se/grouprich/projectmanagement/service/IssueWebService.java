@@ -5,6 +5,7 @@ import se.grouprich.projectmanagement.exception.InvalidValueException;
 import se.grouprich.projectmanagement.exception.RepositoryException;
 import se.grouprich.projectmanagement.model.Issue;
 import se.grouprich.projectmanagement.model.IssueData;
+import se.grouprich.projectmanagement.model.WorkItemData;
 import se.grouprich.projectmanagement.model.mapper.IssueMapper;
 
 import javax.ws.rs.*;
@@ -21,6 +22,7 @@ import java.net.URI;
 public class IssueWebService
 {
 	private static final IssueService issueService = Loader.getBean(IssueService.class);
+	private static final WorkItemService workItemService = Loader.getBean(WorkItemService.class);
 	private static final IssueMapper issueMapper = new IssueMapper();
 
 	@Context
@@ -40,29 +42,22 @@ public class IssueWebService
 	public Response getIssue(@PathParam("id") Long id) throws RepositoryException
 	{
 		IssueData issueData = issueService.findById(id);
-
 		Issue issue = issueMapper.convertIssueDataToIssue(issueData);
 
 		return Response.ok(issue).build();
 	}
+	
+	@PUT
+	@Path("{id}")
+	public Response updateIssue(@PathParam("id") Long id, Issue issue) throws InvalidValueException, RepositoryException
+	{
+		IssueData issueData = issueService.findById(id);
+		IssueData updateIssueData = issueMapper.updateIssueData(issue, issueData);
+		issueService.createOrUpdate(updateIssueData);
 
-	//	@PUT //Lägg till en Issue till WorkItem
-	//	@Path("{id}")
-	//	public Response updateIssueByWorkItem(@PathParam("id") Long id, Issue issue) throws UserException, RepositoryException
-	//	{
-	//		IssueData issueData = issueService.findById(id);
-	//
-	//		if(issueData == null)
-	//		{
-	//			Response.status(Status.NOT_FOUND);
-	//		}
-	//
-	//		IssueData updateIssueData = issueMapper.updateIssueData(issue, issueData);
-	//		issueService.createOrUpdate(updateIssueData);
-	//
-	//		return Response.noContent().build();
-	//	}
-
+		return Response.noContent().build();
+	}
+	
 	@DELETE
 	@Path("{id}")
 	public Response deleteIssue(@PathParam("id") Long id) throws RepositoryException
@@ -77,25 +72,21 @@ public class IssueWebService
 	}
 
 	@PUT
-	@Path("{id}")
-	public Response updateIssue(@PathParam("id") Long id, Issue issue) throws InvalidValueException, RepositoryException
+	@Path("{issueId}/work-item/{workItemId}")
+	public Response addIssueToWorkItem(@PathParam("issueId") Long issueId, @PathParam("workItemId") Long workItemId) throws InvalidValueException, RepositoryException
 	{
-		IssueData issueData = issueService.findById(id);
-
-		if (issueData == null)
-		{
-			Response.status(Status.NOT_FOUND);
-		}
-
-		IssueData updateIssueData = issueMapper.updateIssueData(issue, issueData);
-		issueService.createOrUpdate(updateIssueData);
-
+		IssueData issueData = issueService.findById(issueId);
+		WorkItemData workItemData = workItemService.findById(workItemId);
+		
+		issueService.createAndAddToWorkItem(workItemData, issueData);
+		
 		return Response.noContent().build();
 	}
-
-	//	@GET
-	//	public Response getAllWorkItemInIssue()
-	//	{
-	//
-	//	}
+	
+//	@GET
+//	@Path("workItem")
+//	public Response getAllWorkItemsWithIssues()
+//	{
+//		
+//	}
 }
