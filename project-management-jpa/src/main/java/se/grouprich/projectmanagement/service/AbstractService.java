@@ -7,12 +7,12 @@ import se.grouprich.projectmanagement.exception.InvalidValueException;
 import se.grouprich.projectmanagement.exception.RepositoryException;
 import se.grouprich.projectmanagement.model.AbstractEntityData;
 
-public abstract class AbstractService<E extends AbstractEntityData, R extends CrudRepository<E, Long>>
+abstract class AbstractService<E extends AbstractEntityData, R extends CrudRepository<E, Long>>
 {
-	protected final R superRepository;
-	private final Class<E> classType;
+	R superRepository;
+	private Class<E> classType;
 
-	protected AbstractService(final R superRepository, final Class<E> classType)
+	AbstractService(final R superRepository, final Class<E> classType)
 	{
 		this.superRepository = superRepository;
 		this.classType = classType;
