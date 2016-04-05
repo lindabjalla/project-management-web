@@ -24,9 +24,9 @@ public class TeamService extends AbstractService<TeamData, TeamRepository>
 	}
 
 	@Override
-	public TeamData findById(Long id) throws RepositoryException
+	public TeamData findById(final Long id) throws RepositoryException
 	{
-		TeamData teamData = superRepository.findTeamById(id);
+		final TeamData teamData = superRepository.findTeamById(id);
 		if (teamData == null)
 		{
 			throw new RepositoryException("Team with id: " + id + " was not found");
