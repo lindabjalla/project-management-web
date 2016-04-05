@@ -32,8 +32,9 @@ public final class WorkItemWebService
 	private UriInfo uriInfo;
 
 	@POST
-	public Response createWorkItem(WorkItem workItem) throws InvalidValueException
+	public Response createWorkItem(final WorkItem workItem) throws InvalidValueException
 	{
+		workItem.setStatus(WorkItemStatus.UNSTARTED);
 		WorkItemData createdWorkItem = workItemService.createOrUpdate(workItemMapper.convertWorkItemToWorkItemData(workItem));
 		URI location = uriInfo.getAbsolutePathBuilder().path(getClass(), "getWorkItem").build(createdWorkItem.getId());
 
@@ -42,7 +43,7 @@ public final class WorkItemWebService
 
 	@GET
 	@Path("{id}")
-	public Response getWorkItem(@PathParam("id") Long id) throws RepositoryException
+	public Response getWorkItem(@PathParam("id") final Long id) throws RepositoryException
 	{
 		WorkItemData workItemData = workItemService.findById(id);
 		WorkItem workItem = workItemMapper.convertWorkItemDataToWorkItem(workItemData);
@@ -52,9 +53,9 @@ public final class WorkItemWebService
 
 	@PUT
 	@Path("{id}/status/{status}")
-	public Response changeWorkItemStatus(@PathParam("id") Long id, @PathParam("status") WorkItemStatus status) throws RepositoryException, InvalidValueException
+	public Response changeWorkItemStatus(@PathParam("id") final Long id, @PathParam("status") final WorkItemStatus status) throws RepositoryException, InvalidValueException
 	{
-		WorkItemData workItemData = workItemService.findById(id);
+		final WorkItemData workItemData = workItemService.findById(id);
 
 		if (!EnumUtils.isValidEnum(WorkItemStatus.class, status.toString()))
 		{
@@ -67,9 +68,9 @@ public final class WorkItemWebService
 
 	@DELETE
 	@Path("{id}")
-	public Response deleteWorkItem(@PathParam("id") Long id) throws RepositoryException
+	public Response deleteWorkItem(@PathParam("id") final Long id) throws RepositoryException
 	{
-		WorkItemData workItemData = workItemService.findById(id);
+		final WorkItemData workItemData = workItemService.findById(id);
 		workItemService.removeWorkItem(workItemData);
 
 		return Response.noContent().build();
@@ -77,11 +78,11 @@ public final class WorkItemWebService
 
 	@PUT
 	@Path("{workItemId}/user/{userId}")
-	public Response assignWorkItemToUser(@PathParam("workItemId") Long workItemId, @PathParam("userId") Long userId)
+	public Response assignWorkItemToUser(@PathParam("workItemId") final Long workItemId, @PathParam("userId") final Long userId)
 			throws RepositoryException, InvalidValueException
 	{
-		UserData userData = userService.findById(userId);
-		WorkItemData workItemData = workItemService.findById(workItemId);
+		final UserData userData = userService.findById(userId);
+		final WorkItemData workItemData = workItemService.findById(workItemId);
 		workItemService.assignWorkItemToUser(userData, workItemData);
 
 		return Response.noContent().build();
@@ -89,46 +90,46 @@ public final class WorkItemWebService
 
 	@GET
 	@Path("status/{status}")
-	public Response getWorkItemsByStatus(@PathParam("status") WorkItemStatus status) throws RepositoryException
+	public Response getWorkItemsByStatus(@PathParam("status") final WorkItemStatus status) throws RepositoryException
 	{
 		if (!EnumUtils.isValidEnum(WorkItemStatus.class, status.toString()))
 		{
 			throw new InvalidStatusException(status.toString());
 		}
-		List<WorkItemData> workItemDataList = workItemService.fetchWorkItemsByStatus(status);
-		GenericEntity<Collection<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
+		final List<WorkItemData> workItemDataList = workItemService.fetchWorkItemsByStatus(status);
+		final GenericEntity<Collection<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
 
 		return Response.ok(workItems).build();
 	}
 
 	@GET
 	@Path("team/{teamId}")
-	public Response getWorkItemsForTeam(@PathParam("teamId") Long teamId) throws RepositoryException
+	public Response getWorkItemsForTeam(@PathParam("teamId") final Long teamId) throws RepositoryException
 	{
-		TeamData teamData = teamService.findById(teamId);
-		List<WorkItemData> workItemDataList = workItemService.fetchWorkItemsForTeam(teamData);
-		GenericEntity<Collection<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
+		final TeamData teamData = teamService.findById(teamId);
+		final List<WorkItemData> workItemDataList = workItemService.fetchWorkItemsForTeam(teamData);
+		final GenericEntity<Collection<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
 
 		return Response.ok(workItems).build();
 	}
 
 	@GET
 	@Path("user/{userId}")
-	public Response getWorkItemsForUser(@PathParam("userId") Long userId) throws RepositoryException
+	public Response getWorkItemsForUser(@PathParam("userId") final Long userId) throws RepositoryException
 	{
-		UserData userData = userService.findById(userId);
-		List<WorkItemData> workItemDataList = workItemService.fetchWorkItemsForUser(userData);
-		GenericEntity<Collection<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
+		final UserData userData = userService.findById(userId);
+		final List<WorkItemData> workItemDataList = workItemService.fetchWorkItemsForUser(userData);
+		final GenericEntity<Collection<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
 
 		return Response.ok(workItems).build();
 	}
 
 	@GET
 	@Path("search")
-	public Response searchWorkItemsByDescriptionContaining(@QueryParam("keyword") String keyword) throws RepositoryException
+	public Response searchWorkItemsByDescriptionContaining(@QueryParam("keyword") final String keyword) throws RepositoryException
 	{
-		List<WorkItemData> workItemDataList = workItemService.searchWorkItemsByDescriptionContaining(keyword);
-		GenericEntity<Collection<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
+		final List<WorkItemData> workItemDataList = workItemService.searchWorkItemsByDescriptionContaining(keyword);
+		final GenericEntity<Collection<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
 
 		return Response.ok(workItems).build();
 	}
