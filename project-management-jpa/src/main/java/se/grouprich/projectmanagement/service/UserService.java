@@ -21,7 +21,7 @@ public class UserService extends AbstractService<UserData, UserRepository>
 	private WorkItemRepository workItemRepository;
 
 	@Autowired
-	UserService(final UserRepository userRepository, WorkItemRepository workItemRepository)
+	UserService(final UserRepository userRepository, final WorkItemRepository workItemRepository)
 	{
 		super(userRepository, UserData.class);
 		this.workItemRepository = workItemRepository;
@@ -39,7 +39,7 @@ public class UserService extends AbstractService<UserData, UserRepository>
 
 	public UserData findByControlId(final String controlId) throws RepositoryException
 	{
-		UserData userData = superRepository.findByControlId(controlId);
+		final UserData userData = superRepository.findByControlId(controlId);
 
 		if (userData == null)
 		{
@@ -50,7 +50,7 @@ public class UserService extends AbstractService<UserData, UserRepository>
 
 	public List<UserData> searchUsersByFirstNameOrLastNameOrUsername(final String firstName, final String lastName, final String username) throws RepositoryException
 	{
-		List<UserData> userDataList = superRepository.findAllByFirstNameOrLastNameOrUsername(firstName, lastName, username);
+		final List<UserData> userDataList = superRepository.findAllByFirstNameOrLastNameOrUsername(firstName, lastName, username);
 		if (userDataList.isEmpty())
 		{
 			throw new RepositoryException("No user with firstName: " + firstName + ", lastName: " + lastName + " or username: " + username + " was found");
@@ -60,7 +60,7 @@ public class UserService extends AbstractService<UserData, UserRepository>
 
 	public List<UserData> findByTeam(final TeamData team) throws RepositoryException
 	{
-		List<UserData> userDataList = superRepository.findByTeam(team);
+		final List<UserData> userDataList = superRepository.findByTeam(team);
 		if (userDataList.isEmpty())
 		{
 			throw new RepositoryException("No user with Team: " + team + " was found");

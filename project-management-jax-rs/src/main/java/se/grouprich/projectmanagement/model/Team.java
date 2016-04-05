@@ -7,7 +7,7 @@ public final class Team extends AbstractEntity
 	private String name;
 	private TeamStatus status;
 
-	public Team(){}
+	public Team() {}
 
 	public Team(final Long id, final String controlId, final String name, final TeamStatus status)
 	{

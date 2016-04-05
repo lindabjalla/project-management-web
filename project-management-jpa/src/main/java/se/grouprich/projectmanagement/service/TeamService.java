@@ -39,12 +39,6 @@ public class TeamService extends AbstractService<TeamData, TeamRepository>
 		return super.createOrUpdate(team);
 	}
 
-	public TeamData inactivateTeam(final TeamData team) throws InvalidValueException
-	{
-		team.setStatus(TeamStatus.INACTIVE);
-		return createOrUpdate(team);
-	}
-
 	@Transactional
 	public TeamData addUserToTeam(final TeamData team, final UserData user) throws RepositoryException, InvalidValueException
 	{
@@ -61,5 +55,11 @@ public class TeamService extends AbstractService<TeamData, TeamRepository>
 
 		final TeamData teamUserAdded = team.addUser(user);
 		return createOrUpdate(teamUserAdded);
+	}
+
+	public TeamData inactivateTeam(final TeamData team) throws InvalidValueException
+	{
+		team.setStatus(TeamStatus.INACTIVE);
+		return createOrUpdate(team);
 	}
 }
