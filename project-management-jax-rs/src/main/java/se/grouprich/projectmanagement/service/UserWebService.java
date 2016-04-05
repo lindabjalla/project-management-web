@@ -28,7 +28,7 @@ public final class UserWebService
 	private UriInfo uriInfo;
 
 	@POST
-	public Response createUser(User user) throws InvalidValueException, RepositoryException
+	public Response createUser(final User user) throws InvalidValueException, RepositoryException
 	{
 		UserData createdUser = userService.createOrUpdate(userMapper.convertUserToUserData(user));
 		URI location = uriInfo.getAbsolutePathBuilder().path(getClass(), "getUser").build(createdUser.getId());
@@ -38,7 +38,7 @@ public final class UserWebService
 
 	@GET
 	@Path("{id}")
-	public Response getUser(@PathParam("id") Long id) throws RepositoryException
+	public Response getUser(@PathParam("id") final Long id) throws RepositoryException
 	{
 		UserData userData = userService.findById(id);
 		User user = userMapper.convertUserDataToUser(userData);
@@ -48,7 +48,7 @@ public final class UserWebService
 
 	@PUT
 	@Path("{id}")
-	public Response updateUser(@PathParam("id") Long id, User user) throws InvalidValueException, RepositoryException
+	public Response updateUser(@PathParam("id") final Long id, User user) throws InvalidValueException, RepositoryException
 	{
 		UserData userData = userService.findById(id);
 		UserData updatedUserData = userMapper.updateUserData(user, userData);
@@ -59,7 +59,7 @@ public final class UserWebService
 
 	@DELETE
 	@Path("{id}")
-	public Response deleteUser(@PathParam("id") Long id) throws RepositoryException
+	public Response deleteUser(@PathParam("id") final Long id) throws RepositoryException
 	{
 		userService.deleteById(id);
 		return Response.noContent().build();
@@ -67,7 +67,7 @@ public final class UserWebService
 
 	@GET
 	@Path("control-id/{controlId}")
-	public Response getUserByControlId(@PathParam("controlId") String controlId) throws RepositoryException
+	public Response getUserByControlId(@PathParam("controlId") final String controlId) throws RepositoryException
 	{
 		UserData userData = userService.findByControlId(controlId);
 		User user = userMapper.convertUserDataToUser(userData);
@@ -77,7 +77,7 @@ public final class UserWebService
 
 	@GET
 	@Path("search")
-	public Response searchUsersByFirstNameOrLastNameOrUsername(@QueryParam("first-name") String firstName, @QueryParam("last-name") String lastName,
+	public Response searchUsersByFirstNameOrLastNameOrUsername(@QueryParam("first-name") final String firstName, @QueryParam("last-name") String lastName,
 			@QueryParam("username") String username) throws RepositoryException
 	{
 		List<UserData> userDataList = userService.searchUsersByFirstNameOrLastNameOrUsername(firstName, lastName, username);
@@ -98,7 +98,7 @@ public final class UserWebService
 
 	@GET
 	@Path("team/{teamId}")
-	public Response getUsersByTeam(@PathParam("teamId") Long teamId) throws RepositoryException
+	public Response getUsersByTeam(@PathParam("teamId") final Long teamId) throws RepositoryException
 	{
 		TeamData teamData = teamService.findById(teamId);
 		List<UserData> userDataList = userService.findByTeam(teamData);
