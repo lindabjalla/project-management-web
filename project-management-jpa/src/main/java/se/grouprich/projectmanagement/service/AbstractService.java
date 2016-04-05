@@ -35,7 +35,7 @@ abstract class AbstractService<E extends AbstractEntityData, R extends CrudRepos
 	}
 
 	@Transactional
-	public E deleteById(final Long id) throws RepositoryException
+	public E deleteById(final Long id) throws RepositoryException, InvalidValueException
 	{
 		final E entity = findById(id);
 		superRepository.delete(id);

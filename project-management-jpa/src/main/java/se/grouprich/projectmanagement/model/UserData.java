@@ -87,10 +87,15 @@ public class UserData extends AbstractEntityData
 
 	public UserData setTeam(final TeamData team)
 	{
-		if ((this.team == null && team != null) || (!this.team.equals(team) && team != null))
+		if (this.team == null && team != null)
 		{
 			this.team = team;
 			this.team.addUser(this);
+		}
+		else if (this.team != null && !this.team.equals(team))
+		{
+			this.team.getUsers().remove(this);
+			this.team = team;
 		}
 		return this;
 	}

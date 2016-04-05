@@ -11,6 +11,8 @@ import se.grouprich.projectmanagement.repository.TeamRepository;
 import se.grouprich.projectmanagement.repository.UserRepository;
 import se.grouprich.projectmanagement.status.TeamStatus;
 
+import java.util.Set;
+
 @Service
 public class TeamService extends AbstractService<TeamData, TeamRepository>
 {
@@ -34,9 +36,18 @@ public class TeamService extends AbstractService<TeamData, TeamRepository>
 		return superRepository.findTeamById(id);
 	}
 
-	public TeamData createOrUpdate(final TeamData team) throws InvalidValueException
+	@Transactional
+	@Override
+	public TeamData deleteById(final Long id) throws RepositoryException, InvalidValueException
 	{
-		return super.createOrUpdate(team);
+		final TeamData team = findById(id);
+		final Set<UserData> users = team.getUsers();
+		if (!users.isEmpty())
+		{
+			users.forEach(user -> userRepository.save(user.setTeam(null)));
+		}
+		super.deleteById(id);
+		return team;
 	}
 
 	@Transactional

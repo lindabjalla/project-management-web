@@ -28,30 +28,30 @@ public class TeamWebService
 	private UriInfo uriInfo;
 
 	@POST
-	public Response createTeam(Team team) throws InvalidValueException
+	public Response createTeam(final Team team) throws InvalidValueException
 	{
 		TeamData createdTeam = teamService.createOrUpdate(teamMapper.convertTeamToTeamData(team));
-		URI location = uriInfo.getAbsolutePathBuilder().path(getClass(), "getTeam").build(createdTeam.getId());
+		final URI location = uriInfo.getAbsolutePathBuilder().path(getClass(), "getTeam").build(createdTeam.getId());
 
 		return Response.created(location).build();
 	}
 
 	@GET
 	@Path("{id}")
-	public Response getTeam(@PathParam("id") Long id) throws RepositoryException
+	public Response getTeam(@PathParam("id") final Long id) throws RepositoryException
 	{
-		TeamData teamData = teamService.findById(id);
-		Team team = teamMapper.convertTeamDataToTeam(teamData);
+		final TeamData teamData = teamService.findById(id);
+		final Team team = teamMapper.convertTeamDataToTeam(teamData);
 
 		return Response.ok(team).build();
 	}
 
 	@PUT
 	@Path("{id}")
-	public Response updateTeam(@PathParam("id") Long id, Team team) throws InvalidValueException, RepositoryException
+	public Response updateTeam(@PathParam("id") final Long id, final Team team) throws InvalidValueException, RepositoryException
 	{
-		TeamData teamData = teamService.findById(id);
-		TeamData updateTeamData = teamMapper.updateTeamData(team, teamData);
+		final TeamData teamData = teamService.findById(id);
+		final TeamData updateTeamData = teamMapper.updateTeamData(team, teamData);
 		teamService.createOrUpdate(updateTeamData);
 
 		return Response.noContent().build();
@@ -59,7 +59,7 @@ public class TeamWebService
 
 	@DELETE
 	@Path("{id}")
-	public Response deleteTeam(@PathParam("id") Long id) throws RepositoryException
+	public Response deleteTeam(@PathParam("id") final Long id) throws RepositoryException, InvalidValueException
 	{
 		teamService.deleteById(id);
 		return Response.noContent().build();
@@ -68,19 +68,19 @@ public class TeamWebService
 	@GET
 	public Response getAllTeams() throws RepositoryException
 	{
-		Iterable<TeamData> teamDataIterable = teamService.findAll();
-		List<TeamData> teamDataList = Lists.newArrayList(teamDataIterable);
-		GenericEntity<Collection<Team>> teams = teamMapper.convertList(teamDataList);
+		final Iterable<TeamData> teamDataIterable = teamService.findAll();
+		final List<TeamData> teamDataList = Lists.newArrayList(teamDataIterable);
+		final GenericEntity<Collection<Team>> teams = teamMapper.convertList(teamDataList);
 
 		return Response.ok(teams).build();
 	}
 
 	@PUT
 	@Path("{teamId}/user/{userId}")
-	public Response addUserToTeam(@PathParam("teamId") Long teamId, @PathParam("userId") Long userId) throws InvalidValueException, RepositoryException
+	public Response addUserToTeam(@PathParam("teamId") final Long teamId, @PathParam("userId") final Long userId) throws InvalidValueException, RepositoryException
 	{
-		TeamData teamData = teamService.findById(teamId);
-		UserData userData = userService.findById(userId);
+		final TeamData teamData = teamService.findById(teamId);
+		final UserData userData = userService.findById(userId);
 		teamService.addUserToTeam(teamData, userData);
 
 		return Response.noContent().build();
