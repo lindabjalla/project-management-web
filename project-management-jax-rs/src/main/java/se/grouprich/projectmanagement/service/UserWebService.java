@@ -31,7 +31,7 @@ public final class UserWebService
 	public Response createUser(final User user) throws InvalidValueException, RepositoryException
 	{
 		UserData createdUser = userService.createOrUpdate(userMapper.convertUserToUserData(user));
-		URI location = uriInfo.getAbsolutePathBuilder().path(getClass(), "getUser").build(createdUser.getId());
+		final URI location = uriInfo.getAbsolutePathBuilder().path(getClass(), "getUser").build(createdUser.getId());
 
 		return Response.created(location).build();
 	}
@@ -40,8 +40,8 @@ public final class UserWebService
 	@Path("{id}")
 	public Response getUser(@PathParam("id") final Long id) throws RepositoryException
 	{
-		UserData userData = userService.findById(id);
-		User user = userMapper.convertUserDataToUser(userData);
+		final UserData userData = userService.findById(id);
+		final User user = userMapper.convertUserDataToUser(userData);
 
 		return Response.ok(user).build();
 	}
@@ -50,8 +50,8 @@ public final class UserWebService
 	@Path("{id}")
 	public Response updateUser(@PathParam("id") final Long id, User user) throws InvalidValueException, RepositoryException
 	{
-		UserData userData = userService.findById(id);
-		UserData updatedUserData = userMapper.updateUserData(user, userData);
+		final UserData userData = userService.findById(id);
+		final UserData updatedUserData = userMapper.updateUserData(user, userData);
 		userService.createOrUpdate(updatedUserData);
 
 		return Response.noContent().build();
@@ -59,7 +59,7 @@ public final class UserWebService
 
 	@DELETE
 	@Path("{id}")
-	public Response deleteUser(@PathParam("id") final Long id) throws RepositoryException
+	public Response deleteUser(@PathParam("id") final Long id) throws RepositoryException, InvalidValueException
 	{
 		userService.deleteById(id);
 		return Response.noContent().build();
@@ -69,8 +69,8 @@ public final class UserWebService
 	@Path("control-id/{controlId}")
 	public Response getUserByControlId(@PathParam("controlId") final String controlId) throws RepositoryException
 	{
-		UserData userData = userService.findByControlId(controlId);
-		User user = userMapper.convertUserDataToUser(userData);
+		final UserData userData = userService.findByControlId(controlId);
+		final User user = userMapper.convertUserDataToUser(userData);
 
 		return Response.ok(user).build();
 	}
@@ -80,8 +80,8 @@ public final class UserWebService
 	public Response searchUsersByFirstNameOrLastNameOrUsername(@QueryParam("first-name") final String firstName, @QueryParam("last-name") String lastName,
 			@QueryParam("username") String username) throws RepositoryException
 	{
-		List<UserData> userDataList = userService.searchUsersByFirstNameOrLastNameOrUsername(firstName, lastName, username);
-		GenericEntity<Collection<User>> users = userMapper.convertList(userDataList);
+		final List<UserData> userDataList = userService.searchUsersByFirstNameOrLastNameOrUsername(firstName, lastName, username);
+		final GenericEntity<Collection<User>> users = userMapper.convertList(userDataList);
 
 		return Response.ok(users).build();
 	}
@@ -89,9 +89,9 @@ public final class UserWebService
 	@GET
 	public Response getAllUsers() throws RepositoryException
 	{
-		Iterable<UserData> userDataIterable = userService.findAll();
-		List<UserData> userDataList = Lists.newArrayList(userDataIterable);
-		GenericEntity<Collection<User>> users = userMapper.convertList(userDataList);
+		final Iterable<UserData> userDataIterable = userService.findAll();
+		final List<UserData> userDataList = Lists.newArrayList(userDataIterable);
+		final GenericEntity<Collection<User>> users = userMapper.convertList(userDataList);
 
 		return Response.ok(users).build();
 	}
@@ -100,9 +100,9 @@ public final class UserWebService
 	@Path("team/{teamId}")
 	public Response getUsersByTeam(@PathParam("teamId") final Long teamId) throws RepositoryException
 	{
-		TeamData teamData = teamService.findById(teamId);
-		List<UserData> userDataList = userService.findByTeam(teamData);
-		GenericEntity<Collection<User>> users = userMapper.convertList(userDataList);
+		final TeamData teamData = teamService.findById(teamId);
+		final List<UserData> userDataList = userService.findByTeam(teamData);
+		final GenericEntity<Collection<User>> users = userMapper.convertList(userDataList);
 
 		return Response.ok(users).build();
 	}
