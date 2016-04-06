@@ -21,7 +21,7 @@ public final class TeamMapper
 
 	public TeamMapper()
 	{
-		mapperFactory.classMap(Team.class, TeamData.class).exclude("id").byDefault().register();
+		mapperFactory.classMap(Team.class, TeamData.class).byDefault().register();
 	}
 
 	public TeamData convertTeamToTeamData(final Team team)

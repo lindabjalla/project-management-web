@@ -21,7 +21,7 @@ public final class WorkItemMapper
 
 	public WorkItemMapper()
 	{
-		mapperFactory.classMap(WorkItem.class, WorkItemData.class).exclude("id").byDefault().register();
+		mapperFactory.classMap(WorkItem.class, WorkItemData.class).byDefault().register();
 	}
 
 	public WorkItemData convertWorkItemToWorkItemData(final WorkItem workItem)

@@ -7,7 +7,7 @@ public class Issue extends AbstractEntity
 
 	public Issue(){}
 
-	public Issue(Long id, String controlId, String description)
+	public Issue(final Long id, final String controlId, final String description)
 	{
 		super(id);
 		this.description = description;
@@ -28,7 +28,7 @@ public class Issue extends AbstractEntity
 		this.description = description;
 	}
 
-	public void setWorkItem(WorkItem workItem)
+	public void setWorkItem(final WorkItem workItem)
 	{
 		this.workItem = workItem;
 	}

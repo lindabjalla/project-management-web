@@ -79,7 +79,6 @@ public class WorkItemData extends AbstractEntityData
 		{
 			return true;
 		}
-
 		if (other instanceof WorkItemData)
 		{
 			WorkItemData otherWorkItem = (WorkItemData) other;

@@ -32,13 +32,13 @@ public class IssueData extends AbstractEntityData
 		return workItem;
 	}
 
-	public IssueData setDescription(String description)
+	public IssueData setDescription(final String description)
 	{
 		this.description = description;
 		return this;
 	}
 
-	public IssueData setWorkItem(WorkItemData workItem)
+	public IssueData setWorkItem(final WorkItemData workItem)
 	{
 		this.workItem = workItem;
 		return this;
@@ -51,7 +51,6 @@ public class IssueData extends AbstractEntityData
 		{
 			return true;
 		}
-
 		if (other instanceof IssueData)
 		{
 			IssueData otherIssue = (IssueData) other;
