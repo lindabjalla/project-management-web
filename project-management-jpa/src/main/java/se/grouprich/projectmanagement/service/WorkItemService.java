@@ -69,7 +69,7 @@ public class WorkItemService extends AbstractService<WorkItemData, WorkItemRepos
 
 	public List<WorkItemData> fetchWorkItemsByStatus(final WorkItemStatus status) throws RepositoryException
 	{
-		List<WorkItemData> workItemDataList = superRepository.findByStatus(status);
+		final List<WorkItemData> workItemDataList = superRepository.findByStatus(status);
 		if (workItemDataList.isEmpty())
 		{
 			throw new RepositoryException("WorkItem with WorkItemStatus: " + status + " was not found");
@@ -79,7 +79,7 @@ public class WorkItemService extends AbstractService<WorkItemData, WorkItemRepos
 
 	public List<WorkItemData> fetchWorkItemsForTeam(final TeamData team) throws RepositoryException
 	{
-		List<WorkItemData> workItemDataList = superRepository.findByTeam(team);
+		final List<WorkItemData> workItemDataList = superRepository.findByTeam(team);
 		if (workItemDataList.isEmpty())
 		{
 			throw new RepositoryException("WorkItem for Team: " + team + " was not found");
@@ -89,7 +89,7 @@ public class WorkItemService extends AbstractService<WorkItemData, WorkItemRepos
 
 	public List<WorkItemData> fetchWorkItemsForUser(final UserData user) throws RepositoryException
 	{
-		List<WorkItemData> workItemDataList = superRepository.findByUser(user);
+		final List<WorkItemData> workItemDataList = superRepository.findByUser(user);
 		if (workItemDataList.isEmpty())
 		{
 			throw new RepositoryException("WorkItem for User: " + user + " was not found");
@@ -99,7 +99,7 @@ public class WorkItemService extends AbstractService<WorkItemData, WorkItemRepos
 
 	public List<WorkItemData> searchWorkItemsByDescriptionContaining(final String keyword) throws RepositoryException
 	{
-		List<WorkItemData> workItemDataList = superRepository.findByDescriptionContaining(keyword);
+		final List<WorkItemData> workItemDataList = superRepository.findByDescriptionContaining(keyword);
 		if (workItemDataList.isEmpty())
 		{
 			throw new RepositoryException("WorkItem with keyword: " + keyword + " was not found");
