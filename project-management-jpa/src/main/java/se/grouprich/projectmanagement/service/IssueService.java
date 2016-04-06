@@ -10,6 +10,10 @@ import se.grouprich.projectmanagement.model.WorkItemData;
 import se.grouprich.projectmanagement.repository.IssueRepository;
 import se.grouprich.projectmanagement.status.WorkItemStatus;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Service
 public class IssueService extends AbstractService<IssueData, IssueRepository>
 {
@@ -18,38 +22,28 @@ public class IssueService extends AbstractService<IssueData, IssueRepository>
 	{
 		super(issueRepository, IssueData.class);
 	}
-	
-	@Override
-	public IssueData createOrUpdate(final IssueData issueData) throws InvalidValueException 
-	{
-		return super.createOrUpdate(issueData);
-	}
 
 	@Transactional
-	public IssueData addIssueToWorkItem(final IssueData issue, final WorkItemData workItem) throws InvalidValueException
+	public IssueData addIssueToWorkItem(final WorkItemData workItem, final IssueData issue) throws InvalidValueException
 	{
-		if (workItem == null)
-		{
-			throw new InvalidValueException("WorkItem must not be null");
-		}
 		if (!WorkItemStatus.DONE.equals(workItem.getStatus()))
 		{
 			throw new InvalidValueException("An Issue can only be added to a WorkItem with WorkItemStatus.DONE");
 		}
 
-		IssueData issueAddedToWorkItem = issue.setWorkItem(workItem);
+		final IssueData issueAddedToWorkItem = issue.setWorkItem(workItem);
 		workItem.setStatus(WorkItemStatus.UNSTARTED);
 
 		return createOrUpdate(issueAddedToWorkItem);
 	}
 
-//	public IssueData updateIssue(IssueData issue) throws RepositoryException, InvalidValueException
-//	{
-//		if (issue.getId() == null)
-//		{
-//			throw new RepositoryException("Issue does not exist");
-//		}
-//		
-//		return createOrUpdate(issue);
-//	}
+	public Set<WorkItemData> fetchWorkItemsHavingIssue() throws RepositoryException
+	{
+		final List<WorkItemData> workItemsHavingIssue = superRepository.findWorkItemsHavingIssue();
+		if (workItemsHavingIssue.isEmpty())
+		{
+			throw new RepositoryException("No WorkItem with Issue was found");
+		}
+		return new HashSet<>(workItemsHavingIssue);
+	}
 }

@@ -1,8 +1,8 @@
 package se.grouprich.projectmanagement.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -11,8 +11,7 @@ public class IssueData extends AbstractEntityData
 	@Column(name = "issue", columnDefinition = "TEXT", nullable = false)
 	private String description;
 
-	@ManyToOne
-	@JoinColumn(nullable = false)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	private WorkItemData workItem;
 
 	protected IssueData() {}
@@ -32,13 +31,13 @@ public class IssueData extends AbstractEntityData
 		return workItem;
 	}
 
-	public IssueData setDescription(String description)
+	public IssueData setDescription(final String description)
 	{
 		this.description = description;
 		return this;
 	}
 
-	public IssueData setWorkItem(WorkItemData workItem)
+	public IssueData setWorkItem(final WorkItemData workItem)
 	{
 		this.workItem = workItem;
 		return this;
@@ -51,7 +50,6 @@ public class IssueData extends AbstractEntityData
 		{
 			return true;
 		}
-
 		if (other instanceof IssueData)
 		{
 			IssueData otherIssue = (IssueData) other;
@@ -73,6 +71,6 @@ public class IssueData extends AbstractEntityData
 	@Override
 	public String toString()
 	{
-		return "Issue [id=" + getId() + ", controlId=" + getControlId() + ", description=" + description + ", workItem=" + workItem +"]";
+		return "Issue [id=" + getId() + ", controlId=" + getControlId() + ", description=" + description + ", workItem=" + workItem + "]";
 	}
 }

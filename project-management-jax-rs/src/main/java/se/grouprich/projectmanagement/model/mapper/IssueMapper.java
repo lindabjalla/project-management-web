@@ -13,7 +13,7 @@ public final class IssueMapper
 
 	public IssueMapper()
 	{
-		mapperFactory.classMap(Issue.class,  IssueData.class).exclude("id").byDefault().register();
+		mapperFactory.classMap(Issue.class, IssueData.class).exclude("workItem").byDefault().register();
 	}
 	
 	public IssueData convertIssueToIssueData(final Issue issue)

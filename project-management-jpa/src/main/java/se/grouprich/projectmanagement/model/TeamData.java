@@ -71,7 +71,6 @@ public class TeamData extends AbstractEntityData
 		{
 			return true;
 		}
-
 		if (other instanceof TeamData)
 		{
 			TeamData otherTeam = (TeamData) other;

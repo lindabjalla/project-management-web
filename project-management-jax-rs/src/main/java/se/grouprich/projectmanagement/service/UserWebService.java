@@ -30,7 +30,8 @@ public final class UserWebService
 	@POST
 	public Response createUser(final User user) throws InvalidValueException, RepositoryException
 	{
-		UserData createdUser = userService.createOrUpdate(userMapper.convertUserToUserData(user));
+		final UserData userData = userMapper.convertUserToUserData(user);
+		final UserData createdUser = userService.createOrUpdate(userData);
 		final URI location = uriInfo.getAbsolutePathBuilder().path(getClass(), "getUser").build(createdUser.getId());
 
 		return Response.created(location).build();

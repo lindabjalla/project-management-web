@@ -22,7 +22,7 @@ public final class UserMapper
 
 	public UserMapper()
 	{
-		mapperFactory.classMap(User.class, UserData.class).exclude("id").exclude("team").byDefault().register();
+		mapperFactory.classMap(User.class, UserData.class).exclude("team").byDefault().register();
 	}
 
 	public UserData convertUserToUserData(final User user)

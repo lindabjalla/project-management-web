@@ -22,11 +22,11 @@ public class WorkItemData extends AbstractEntityData
 
 	protected WorkItemData() {}
 
-	public WorkItemData(final String title, final String description)
+	public WorkItemData(final String title, final String description, final WorkItemStatus status)
 	{
 		this.title = title;
 		this.description = description;
-		status = WorkItemStatus.UNSTARTED;
+		this.status = status;
 	}
 
 	public String getTitle()
@@ -79,7 +79,6 @@ public class WorkItemData extends AbstractEntityData
 		{
 			return true;
 		}
-
 		if (other instanceof WorkItemData)
 		{
 			WorkItemData otherWorkItem = (WorkItemData) other;

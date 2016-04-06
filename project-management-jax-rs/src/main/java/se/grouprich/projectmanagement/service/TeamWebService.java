@@ -30,7 +30,8 @@ public class TeamWebService
 	@POST
 	public Response createTeam(final Team team) throws InvalidValueException
 	{
-		TeamData createdTeam = teamService.createOrUpdate(teamMapper.convertTeamToTeamData(team));
+		final TeamData teamData = teamMapper.convertTeamToTeamData(team);
+		final TeamData createdTeam = teamService.createOrUpdate(teamData);
 		final URI location = uriInfo.getAbsolutePathBuilder().path(getClass(), "getTeam").build(createdTeam.getId());
 
 		return Response.created(location).build();
