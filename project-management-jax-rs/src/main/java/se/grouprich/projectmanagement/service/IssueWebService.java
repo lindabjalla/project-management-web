@@ -85,7 +85,7 @@ public class IssueWebService
 
 	@GET
 	@Path("work-item")
-	public Response getWorkItemsWithIssue()
+	public Response getWorkItemsWithIssue() throws RepositoryException
 	{
 		final Set<WorkItemData> workItemDataSet = issueService.fetchWorkItemsHavingIssue();
 		final List<WorkItemData> workItemDataList = new ArrayList<>(workItemDataSet);
