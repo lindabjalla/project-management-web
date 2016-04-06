@@ -1,11 +1,9 @@
 package se.grouprich.projectmanagement.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "Issue")
 public class IssueData extends AbstractEntityData
 {
 	@Column(name = "issue", columnDefinition = "TEXT", nullable = false)

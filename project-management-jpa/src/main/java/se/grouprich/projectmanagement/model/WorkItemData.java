@@ -5,6 +5,7 @@ import se.grouprich.projectmanagement.status.WorkItemStatus;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "WorkItem")
 public class WorkItemData extends AbstractEntityData
 {
 	@Column(nullable = false)

@@ -5,6 +5,7 @@ import se.grouprich.projectmanagement.status.UserStatus;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "User")
 public class UserData extends AbstractEntityData
 {
 	@Column(nullable = false, unique = true)
