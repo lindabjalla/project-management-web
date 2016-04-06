@@ -17,7 +17,8 @@ import java.util.Set;
 @Service
 public class IssueService extends AbstractService<IssueData, IssueRepository>
 {
-	@Autowired IssueService(final IssueRepository issueRepository)
+	@Autowired
+	IssueService(final IssueRepository issueRepository)
 	{
 		super(issueRepository, IssueData.class);
 	}
