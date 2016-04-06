@@ -35,8 +35,9 @@ public final class WorkItemWebService
 	public Response createWorkItem(final WorkItem workItem) throws InvalidValueException
 	{
 		workItem.setStatus(WorkItemStatus.UNSTARTED);
-		WorkItemData createdWorkItem = workItemService.createOrUpdate(workItemMapper.convertWorkItemToWorkItemData(workItem));
-		URI location = uriInfo.getAbsolutePathBuilder().path(getClass(), "getWorkItem").build(createdWorkItem.getId());
+		final WorkItemData workItemData = workItemMapper.convertWorkItemToWorkItemData(workItem);
+		final WorkItemData createdWorkItem = workItemService.createOrUpdate(workItemData);
+		final URI location = uriInfo.getAbsolutePathBuilder().path(getClass(), "getWorkItem").build(createdWorkItem.getId());
 
 		return Response.created(location).build();
 	}

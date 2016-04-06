@@ -10,40 +10,39 @@ import se.grouprich.projectmanagement.model.WorkItemData;
 import se.grouprich.projectmanagement.repository.IssueRepository;
 import se.grouprich.projectmanagement.status.WorkItemStatus;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Service
 public class IssueService extends AbstractService<IssueData, IssueRepository>
 {
-	@Autowired
-	IssueService(final IssueRepository issueRepository)
+	@Autowired IssueService(final IssueRepository issueRepository)
 	{
 		super(issueRepository, IssueData.class);
 	}
 
 	@Transactional
-	public IssueData createAndAddToWorkItem(WorkItemData workItem, IssueData issue) throws InvalidValueException
+	public IssueData addIssueToWorkItem(final WorkItemData workItem, final IssueData issue) throws InvalidValueException
 	{
-		if (workItem == null)
-		{
-			throw new InvalidValueException("WorkItem must not be null");
-		}
 		if (!WorkItemStatus.DONE.equals(workItem.getStatus()))
 		{
 			throw new InvalidValueException("An Issue can only be added to a WorkItem with WorkItemStatus.DONE");
 		}
 
-		IssueData issueAddedToWorkItem = issue.setWorkItem(workItem);
+		final IssueData issueAddedToWorkItem = issue.setWorkItem(workItem);
 		workItem.setStatus(WorkItemStatus.UNSTARTED);
 
 		return createOrUpdate(issueAddedToWorkItem);
 	}
 
-	public IssueData updateIssue(IssueData issue) throws RepositoryException, InvalidValueException
+	public Set<WorkItemData> fetchWorkItemsHavingIssue() throws RepositoryException
 	{
-		if (issue.getId() == null)
+		final List<WorkItemData> workItemsHavingIssue = superRepository.findWorkItemsHavingIssue();
+		if (workItemsHavingIssue.isEmpty())
 		{
-			throw new RepositoryException("Issue does not exist");
+			throw new RepositoryException("No WorkItem with Issue was found");
 		}
-		
-		return createOrUpdate(issue);
+		return new HashSet<>(workItemsHavingIssue);
 	}
 }
