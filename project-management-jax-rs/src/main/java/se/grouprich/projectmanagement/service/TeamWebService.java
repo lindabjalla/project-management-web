@@ -71,7 +71,7 @@ public class TeamWebService
 	{
 		final Iterable<TeamData> teamDataIterable = teamService.findAll();
 		final List<TeamData> teamDataList = Lists.newArrayList(teamDataIterable);
-		final GenericEntity<Collection<Team>> teams = teamMapper.convertList(teamDataList);
+		final GenericEntity<List<Team>> teams = teamMapper.convertList(teamDataList);
 
 		return Response.ok(teams).build();
 	}

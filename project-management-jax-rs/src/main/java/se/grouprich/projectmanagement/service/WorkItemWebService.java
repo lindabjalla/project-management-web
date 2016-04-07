@@ -98,7 +98,7 @@ public final class WorkItemWebService
 			throw new InvalidStatusException(status.toString());
 		}
 		final List<WorkItemData> workItemDataList = workItemService.fetchWorkItemsByStatus(status);
-		final GenericEntity<Collection<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
+		final GenericEntity<List<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
 
 		return Response.ok(workItems).build();
 	}
@@ -109,7 +109,7 @@ public final class WorkItemWebService
 	{
 		final TeamData teamData = teamService.findById(teamId);
 		final List<WorkItemData> workItemDataList = workItemService.fetchWorkItemsForTeam(teamData);
-		final GenericEntity<Collection<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
+		final GenericEntity<List<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
 
 		return Response.ok(workItems).build();
 	}
@@ -120,7 +120,7 @@ public final class WorkItemWebService
 	{
 		final UserData userData = userService.findById(userId);
 		final List<WorkItemData> workItemDataList = workItemService.fetchWorkItemsForUser(userData);
-		final GenericEntity<Collection<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
+		final GenericEntity<List<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
 
 		return Response.ok(workItems).build();
 	}
@@ -130,7 +130,7 @@ public final class WorkItemWebService
 	public Response searchWorkItemsByDescriptionContaining(@QueryParam("keyword") final String keyword) throws RepositoryException
 	{
 		final List<WorkItemData> workItemDataList = workItemService.searchWorkItemsByDescriptionContaining(keyword);
-		final GenericEntity<Collection<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
+		final GenericEntity<List<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
 
 		return Response.ok(workItems).build();
 	}

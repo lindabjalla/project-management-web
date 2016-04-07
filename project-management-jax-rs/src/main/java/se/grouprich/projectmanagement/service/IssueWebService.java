@@ -89,7 +89,7 @@ public class IssueWebService
 	{
 		final Set<WorkItemData> workItemDataSet = issueService.fetchWorkItemsHavingIssue();
 		final List<WorkItemData> workItemDataList = new ArrayList<>(workItemDataSet);
-		final GenericEntity<Collection<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
+		final GenericEntity<List<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
 
 		return Response.ok(workItems).build();
 	}

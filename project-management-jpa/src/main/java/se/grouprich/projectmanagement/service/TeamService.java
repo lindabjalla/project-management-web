@@ -11,6 +11,7 @@ import se.grouprich.projectmanagement.repository.TeamRepository;
 import se.grouprich.projectmanagement.repository.UserRepository;
 import se.grouprich.projectmanagement.status.TeamStatus;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -48,6 +49,17 @@ public class TeamService extends AbstractService<TeamData, TeamRepository>
 		}
 		super.deleteById(id);
 		return team;
+	}
+
+	@Override
+	public List<TeamData> findAll() throws RepositoryException
+	{
+		List<TeamData> allTeams = superRepository.findAllTeams();
+		if (allTeams.isEmpty())
+		{
+			throw new RepositoryException("No Team was found");
+		}
+		return allTeams;
 	}
 
 	@Transactional

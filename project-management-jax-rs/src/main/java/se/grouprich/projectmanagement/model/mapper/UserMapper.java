@@ -11,7 +11,6 @@ import se.grouprich.projectmanagement.service.TeamService;
 
 import javax.ws.rs.core.GenericEntity;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public final class UserMapper
@@ -41,12 +40,12 @@ public final class UserMapper
 		return userData;
 	}
 
-	public GenericEntity<Collection<User>> convertList(final List<UserData> userDataList)
+	public GenericEntity<List<User>> convertList(final List<UserData> userDataList)
 	{
 		List<User> users = new ArrayList<>();
 		userDataList.forEach(userData -> users.add(convertUserDataToUser(userData)));
 
-		return new GenericEntity<Collection<User>>(users){};
+		return new GenericEntity<List<User>>(users){};
 	}
 }
 

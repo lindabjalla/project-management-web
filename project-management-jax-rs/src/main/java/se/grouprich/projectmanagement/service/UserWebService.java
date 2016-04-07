@@ -82,7 +82,7 @@ public final class UserWebService
 			@QueryParam("username") String username) throws RepositoryException
 	{
 		final List<UserData> userDataList = userService.searchUsersByFirstNameOrLastNameOrUsername(firstName, lastName, username);
-		final GenericEntity<Collection<User>> users = userMapper.convertList(userDataList);
+		final GenericEntity<List<User>> users = userMapper.convertList(userDataList);
 
 		return Response.ok(users).build();
 	}
@@ -92,7 +92,7 @@ public final class UserWebService
 	{
 		final Iterable<UserData> userDataIterable = userService.findAll();
 		final List<UserData> userDataList = Lists.newArrayList(userDataIterable);
-		final GenericEntity<Collection<User>> users = userMapper.convertList(userDataList);
+		final GenericEntity<List<User>> users = userMapper.convertList(userDataList);
 
 		return Response.ok(users).build();
 	}
@@ -103,7 +103,7 @@ public final class UserWebService
 	{
 		final TeamData teamData = teamService.findById(teamId);
 		final List<UserData> userDataList = userService.findByTeam(teamData);
-		final GenericEntity<Collection<User>> users = userMapper.convertList(userDataList);
+		final GenericEntity<List<User>> users = userMapper.convertList(userDataList);
 
 		return Response.ok(users).build();
 	}

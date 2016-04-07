@@ -10,7 +10,6 @@ import se.grouprich.projectmanagement.service.TeamService;
 
 import javax.ws.rs.core.GenericEntity;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public final class TeamMapper
@@ -21,7 +20,7 @@ public final class TeamMapper
 
 	public TeamMapper()
 	{
-		mapperFactory.classMap(Team.class, TeamData.class).byDefault().register();
+		mapperFactory.classMap(Team.class, TeamData.class).fieldBToA("users{id}", "userIds{}").byDefault().register();
 	}
 
 	public TeamData convertTeamToTeamData(final Team team)
@@ -40,11 +39,11 @@ public final class TeamMapper
 		return teamData;
 	}
 
-	public GenericEntity<Collection<Team>> convertList(final List<TeamData> teamDataList)
+	public GenericEntity<List<Team>> convertList(final List<TeamData> teamDataList)
 	{
 		List<Team> teams = new ArrayList<>();
 		teamDataList.forEach(teamData -> teams.add(convertTeamDataToTeam(teamData)));
 
-		return new GenericEntity<Collection<Team>>(teams){};
+		return new GenericEntity<List<Team>>(teams){};
 	}
 }
