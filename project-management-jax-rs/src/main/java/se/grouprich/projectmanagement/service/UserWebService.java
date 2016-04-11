@@ -12,7 +12,6 @@ import se.grouprich.projectmanagement.model.mapper.UserMapper;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
-import java.util.Collection;
 import java.util.List;
 
 @Path("/user")

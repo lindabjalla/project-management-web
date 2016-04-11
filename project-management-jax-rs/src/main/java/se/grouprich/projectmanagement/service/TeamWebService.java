@@ -12,13 +12,12 @@ import se.grouprich.projectmanagement.model.mapper.TeamMapper;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
-import java.util.Collection;
 import java.util.List;
 
 @Path("/team")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class TeamWebService
+public final class TeamWebService
 {
 	private static final TeamService teamService = Loader.getBean(TeamService.class);
 	private static final UserService userService = Loader.getBean(UserService.class);
