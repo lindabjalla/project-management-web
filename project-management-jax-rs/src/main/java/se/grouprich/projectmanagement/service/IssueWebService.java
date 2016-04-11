@@ -21,7 +21,7 @@ import java.util.Set;
 @Path("/issue")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class IssueWebService
+public final class IssueWebService
 {
 	private static final IssueService issueService = Loader.getBean(IssueService.class);
 	private static final WorkItemService workItemService = Loader.getBean(WorkItemService.class);
