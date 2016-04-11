@@ -3,10 +3,8 @@ package se.grouprich.projectmanagement.model.mapper;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
-import se.grouprich.projectmanagement.Loader;
 import se.grouprich.projectmanagement.model.WorkItem;
 import se.grouprich.projectmanagement.model.WorkItemData;
-import se.grouprich.projectmanagement.service.WorkItemService;
 
 import javax.ws.rs.core.GenericEntity;
 import java.util.ArrayList;
@@ -16,7 +14,6 @@ public final class WorkItemMapper
 {
 	private final MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
 	private final MapperFacade mapper = mapperFactory.getMapperFacade();
-	private static final WorkItemService teamService = Loader.getBean(WorkItemService.class);
 
 	public WorkItemMapper()
 	{

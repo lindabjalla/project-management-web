@@ -3,11 +3,9 @@ package se.grouprich.projectmanagement.model.mapper;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
-import se.grouprich.projectmanagement.Loader;
 import se.grouprich.projectmanagement.exception.RepositoryException;
 import se.grouprich.projectmanagement.model.User;
 import se.grouprich.projectmanagement.model.UserData;
-import se.grouprich.projectmanagement.service.TeamService;
 
 import javax.ws.rs.core.GenericEntity;
 import java.util.ArrayList;
@@ -17,7 +15,6 @@ public final class UserMapper
 {
 	private final MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
 	private final MapperFacade mapper = mapperFactory.getMapperFacade();
-	private static final TeamService teamService = Loader.getBean(TeamService.class);
 
 	public UserMapper()
 	{
