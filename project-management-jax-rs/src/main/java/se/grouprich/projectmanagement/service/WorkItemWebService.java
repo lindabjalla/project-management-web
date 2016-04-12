@@ -1,8 +1,6 @@
 package se.grouprich.projectmanagement.service;
 
-import org.apache.commons.lang3.EnumUtils;
 import se.grouprich.projectmanagement.Loader;
-import se.grouprich.projectmanagement.exception.InvalidStatusException;
 import se.grouprich.projectmanagement.exception.InvalidValueException;
 import se.grouprich.projectmanagement.exception.RepositoryException;
 import se.grouprich.projectmanagement.model.TeamData;
@@ -56,11 +54,6 @@ public final class WorkItemWebService
 	public Response changeWorkItemStatus(@PathParam("id") final Long id, @PathParam("status") final WorkItemStatus status) throws RepositoryException, InvalidValueException
 	{
 		final WorkItemData workItemData = workItemService.findById(id);
-
-		if (!EnumUtils.isValidEnum(WorkItemStatus.class, status.toString()))
-		{
-			throw new InvalidStatusException(status.toString());
-		}
 		workItemService.changeWorkItemStatus(workItemData, status);
 
 		return Response.noContent().build();
@@ -92,10 +85,6 @@ public final class WorkItemWebService
 	@Path("status/{status}")
 	public Response getWorkItemsByStatus(@PathParam("status") final WorkItemStatus status) throws RepositoryException
 	{
-		if (!EnumUtils.isValidEnum(WorkItemStatus.class, status.toString()))
-		{
-			throw new InvalidStatusException(status.toString());
-		}
 		final List<WorkItemData> workItemDataList = workItemService.fetchWorkItemsByStatus(status);
 		final GenericEntity<List<WorkItem>> workItems = workItemMapper.convertList(workItemDataList);
 
