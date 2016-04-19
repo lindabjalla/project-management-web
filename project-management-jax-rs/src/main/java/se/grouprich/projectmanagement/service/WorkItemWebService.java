@@ -40,7 +40,7 @@ public final class WorkItemWebService
 	}
 
 	@GET
-	@Path("{id}")
+	@Path("{id}") //TODO: Använd controlId(id som vi har skapat själv) istället för id som skapas automatiskt för databasen.
 	public Response getWorkItem(@PathParam("id") final Long id) throws RepositoryException
 	{
 		final WorkItemData workItemData = workItemService.findById(id);
@@ -49,9 +49,10 @@ public final class WorkItemWebService
 		return Response.ok(workItem).build();
 	}
 
-	@PUT //@PATCH
+	@PUT //TODO: Byt till @PATCH
 	@Path("{id}/status/{status}")
-	public Response changeWorkItemStatus(@PathParam("id") final Long id, @PathParam("status") final WorkItemStatus status) throws RepositoryException, InvalidValueException
+	public Response changeWorkItemStatus(@PathParam("id") final Long id, @PathParam("status") final WorkItemStatus status)
+			throws RepositoryException, InvalidValueException
 	{
 		final WorkItemData workItemData = workItemService.findById(id);
 		workItemService.changeWorkItemStatus(workItemData, status);
@@ -113,6 +114,7 @@ public final class WorkItemWebService
 		return Response.ok(workItems).build();
 	}
 
+	// TODO: Flytta denna funktion till getAll() metod.
 	@GET
 	@Path("search")
 	public Response searchWorkItemsByDescriptionContaining(@QueryParam("keyword") final String keyword) throws RepositoryException
